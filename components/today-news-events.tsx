@@ -62,7 +62,7 @@ export default function TodayNewsEvents() {
   return (
     <Card className="shadow-lg bg-gray-800">
       <CardHeader className="flex flex-col space-y-4">
-        <CardTitle className="text-white">Today's news and events</CardTitle>
+        <CardTitle className="text-white">Today&apos;s news and events</CardTitle>
         <div className="flex flex-wrap gap-2">
           {tabData.map((tab) => (
             <button

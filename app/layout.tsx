@@ -7,9 +7,24 @@ import Navbar from '@/components/navbar'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Stock Insights',
+  title: 'VolumeSpike',
   description: 'Your comprehensive stock market analysis platform',
+  openGraph: {
+    title: 'VolumeSpike',
+    description: 'Your comprehensive stock market analysis platform',
+    url: 'https://www.volumespike.in', // Your website URL
+    images: [
+      {
+        url: '/images/volumespike.jpg', // Path to the image inside the public folder
+        width: 200, // Image width
+        height: 200, // Image height
+        alt: 'VolumeSpike stock market analysis', // Image alt text
+      },
+    ],
+    siteName: 'VolumeSpike',
+  },
 }
+
 
 export default function RootLayout({
   children,

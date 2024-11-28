@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { ChevronDown } from 'lucide-react'
+import { motion } from 'framer-motion'
 
 interface Index {
   name: string
@@ -25,20 +26,50 @@ const indices: Index[] = [
 export default function Indices() {
   const [showAll, setShowAll] = useState(false)
 
-  const displayedIndices = showAll ? indices : indices.slice(0, 4)
+  const displayedIndices = showAll ? indices : indices.slice(0, 6)
 
   return (
-    <div className="space-y-4">
-      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="space-y-4 mt-2">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
         {displayedIndices.map((index) => (
           <Card key={index.name} className="shadow-lg bg-gray-800">
-            <CardContent className="p-4">
+            
+            {/* <CardContent className="p-4">
               <h3 className="text-sm font-medium text-gray-300">{index.name}</h3>
               <p className="text-xl sm:text-2xl font-bold mt-1 text-white">{index.value}</p>
               <p className={`text-sm ${index.change > 0 ? 'text-green-500' : 'text-red-500'}`}>
                 {index.change > 0 ? '+' : ''}{index.change.toFixed(2)} ({index.changePercent.toFixed(2)}%)
               </p>
+            </CardContent> */}
+
+            <CardContent className="p-4">
+              <motion.h3
+                className="text-sm font-medium text-gray-300"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1, duration: 0.4 }}
+              >
+                {index.name}
+              </motion.h3>
+              <motion.p
+                className="text-xl sm:text-2xl font-bold mt-1 text-white"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.4 }}
+              >
+                {index.value}
+              </motion.p>
+              <motion.p
+                className={`text-sm ${index.change > 0 ? 'text-green-500' : 'text-red-500'}`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.4 }}
+              >
+                {index.change > 0 ? '+' : ''}
+                {index.change.toFixed(2)} ({index.changePercent.toFixed(2)}%)
+              </motion.p>
             </CardContent>
+
           </Card>
         ))}
       </div>

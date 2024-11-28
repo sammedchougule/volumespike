@@ -36,10 +36,8 @@ export default function TodayStocks() {
   const [activeTab, setActiveTab] = useState('gainers')
   const { data, error } = useSWR<{ stocks: Stock[] }>('/api/stocks', fetcher)
 
-  if (error) return <div className="text-red-500">Failed to load stocks</div>
-  if (!data) return <div className="text-white">Loading...</div>
-
   const filteredStocks = (() => {
+    if (!data) return []
     switch (activeTab) {
       case 'gainers':
         return data.stocks
@@ -71,8 +69,8 @@ export default function TodayStocks() {
   return (
     <Card className="shadow-lg bg-gray-800">
       <CardHeader className="flex flex-col space-y-4">
-        <CardTitle className="text-white">Today&apos;s stocks</CardTitle>
-        <div className="flex flex-wrap gap-2">
+        <CardTitle className="text-white">Today&apos;s Top</CardTitle>
+        <div className="flex gap-2 overflow-x-auto whitespace-nowrap">
           {tabData.map((tab) => (
             <button
               key={tab.id}
@@ -86,30 +84,126 @@ export default function TodayStocks() {
           ))}
         </div>
       </CardHeader>
+
+      {/* <CardContent>
+        {!data && !error ? (
+          <div className="space-y-4">
+            {[...Array(5)].map((_, index) => (
+              <div
+                key={index}
+                className=""
+              ></div>
+            ))}
+          </div>
+        ) : error ? (
+          <div className="text-red-500">Failed to load stocks</div>
+        ) : (
+          <div className="space-y-4">
+            {filteredStocks.map((stock) => (
+              <div
+                key={stock.symbol}
+                className="flex items-center justify-between p-2 hover:bg-gray-700 rounded-lg transition-colors"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center ">
+                    {stock.symbol[0]}
+                  </div>
+                  <div>
+                    <p className="text-white font-medium">{stock.name}</p>
+                    <p className="text-gray-400 text-sm">{stock.symbol}</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <p className="text-white font-medium">
+                    ₹{stock.price.toFixed(2)}
+                  </p>
+                  <p
+                    className={`text-sm flex items-center ${
+                      stock.change >= 0 ? 'text-green-500' : 'text-red-500'
+                    }`}
+                  >
+                    {stock.change >= 0 ? (
+                      <ArrowUpIcon className="mr-1" />
+                    ) : (
+                      <ArrowDownIcon className="mr-1" />
+                    )}
+                    {Math.abs(stock.change)}%
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </CardContent> */}
+
       <CardContent>
-        <div className="space-y-4">
-          {filteredStocks.map((stock) => (
-            <div key={stock.symbol} className="flex items-center justify-between p-2 hover:bg-gray-700 rounded-lg transition-colors">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center">
-                  {stock.symbol[0]}
+        {!data && !error ? (
+          <div className="space-y-4">
+            {[...Array(5)].map((_, index) => (
+              <div
+                key={index}
+                className="flex items-center justify-between p-2 hover:bg-gray-700 rounded-lg transition-colors"
+              >
+                {/* Placeholder for stock symbol */}
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-gray-600 rounded-full animate-pulse"></div>
+                  <div>
+                    <p className="h-4 w-24 bg-gray-600 rounded animate-pulse"></p>
+                    <p className="h-3 w-16 bg-gray-700 rounded mt-1 animate-pulse"></p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-white font-medium">{stock.name}</p>
-                  <p className="text-gray-400 text-sm">{stock.symbol}</p>
+                {/* Placeholder for stock price and change */}
+                <div className="text-right">
+                  <p className="h-4 w-20 bg-gray-600 rounded animate-pulse"></p>
+                  <p className="h-3 w-16 bg-gray-700 rounded mt-1 animate-pulse"></p>
                 </div>
               </div>
-              <div className="text-right">
-                <p className="text-white font-medium">₹{stock.price.toFixed(2)}</p>
-                <p className={`text-sm flex items-center ${stock.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                  {stock.change >= 0 ? <ArrowUpIcon className="mr-1" /> : <ArrowDownIcon className="mr-1" />}
-                  {Math.abs(stock.change)}%
-                </p>
+            ))}
+          </div>
+        ) : error ? (
+          <div className="text-red-500">Failed to load stocks</div>
+        ) : (
+          <div className="space-y-4">
+            {filteredStocks.map((stock) => (
+              <div
+                key={stock.symbol}
+                className="flex items-center justify-between p-2 hover:bg-gray-700 rounded-lg transition-colors"
+              >
+                {/* Stock symbol and name */}
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center">
+                    {stock.symbol[0]}
+                  </div>
+                  <div>
+                    <p className="text-white font-medium">{stock.name}</p>
+                    <p className="text-gray-400 text-sm">{stock.symbol}</p>
+                  </div>
+                </div>
+                {/* Stock price and change */}
+                <div className="text-right">
+                  <p className="text-white font-medium">
+                    ₹{stock.price.toFixed(2)}
+                  </p>
+                  <p
+                    className={`text-sm flex items-center ${
+                      stock.change >= 0 ? 'text-green-500' : 'text-red-500'
+                    }`}
+                  >
+                    {stock.change >= 0 ? (
+                      <ArrowUpIcon className="mr-1" />
+                    ) : (
+                      <ArrowDownIcon className="mr-1" />
+                    )}
+                    {Math.abs(stock.change)}%
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </CardContent>
+
     </Card>
   )
 }
+

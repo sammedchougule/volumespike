@@ -1,0 +1,26 @@
+{
+    "stocks": [
+      { "symbol": "RELIANCE", "name": "Reliance Industries Ltd", "price": 1293.70, "change": -0.15 },
+      { "symbol": "TCS", "name": "Tata Consultancy Services Ltd", "price": 3012.35, "change": 0.33 },
+      { "symbol": "HDFCBANK", "name": "HDFC Bank Ltd", "price": 1788.15, "change": 0.15 },
+      { "symbol": "INFY", "name": "Infosys Ltd", "price": 1919.20, "change": -0.26 },
+      { "symbol": "ICICIBANK", "name": "ICICI Bank Ltd", "price": 1302.65, "change": -0.18 },
+      { "symbol": "HINDUNILVR", "name": "Hindustan Unilever Ltd", "price": 2471.50, "change": -0.31 },
+      { "symbol": "SBIN", "name": "State Bank of India", "price": 837.90, "change": -0.18 },
+      { "symbol": "BHARTIARTL", "name": "Bharti Airtel Ltd", "price": 892.45, "change": 0.22 },
+      { "symbol": "ITC", "name": "ITC Ltd", "price": 448.10, "change": -0.05 },
+      { "symbol": "KOTAKBANK", "name": "Kotak Mahindra Bank Ltd", "price": 1756.80, "change": -0.42 },
+      { "symbol": "LT", "name": "Larsen & Toubro Ltd", "price": 3012.35, "change": 0.33 },
+      { "symbol": "AXISBANK", "name": "Axis Bank Ltd", "price": 962.15, "change": -0.24 },
+      { "symbol": "MARUTI", "name": "Maruti Suzuki India Ltd", "price": 10234.55, "change": 0.18 },
+      { "symbol": "ASIANPAINT", "name": "Asian Paints Ltd", "price": 3145.70, "change": -0.09 },
+      { "symbol": "TATAMOTORS", "name": "Tata Motors Ltd", "price": 678.90, "change": 0.41 },
+      { "symbol": "ICL", "name": "Indo Cotspin Ltd", "price": 38.94, "change": 20.00 },
+      { "symbol": "SYSTANGO", "name": "Systango Technologies Ltd", "price": 252.80, "change": 17.09 },
+      { "symbol": "SURFI", "name": "Suryo Foods and Industries Ltd", "price": 20.50, "change": 16.45 },
+      { "symbol": "OLPCL", "name": "Olympic Cards Ltd", "price": 4.10, "change": 15.17 },
+      { "symbol": "MAHICKRA", "name": "Mahickra Chemicals Ltd", "price": 112.00, "change": 2.33 }
+    ]
+  }
+  
+  

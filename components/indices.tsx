@@ -29,8 +29,8 @@ export default function Indices() {
   const displayedIndices = showAll ? indices : indices.slice(0, 6)
 
   return (
-    <div className="space-y-4 mt-2">
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+    <div className="space-y-8">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
         {displayedIndices.map((index) => (
           <Card key={index.name} className="shadow-lg bg-gray-800">
             
@@ -43,6 +43,7 @@ export default function Indices() {
             </CardContent> */}
 
             <CardContent className="p-4">
+              {/* Apply margin/padding for responsive spacing */}
               <motion.h3
                 className="text-sm font-medium text-gray-300"
                 initial={{ opacity: 0, y: 20 }}
@@ -69,6 +70,7 @@ export default function Indices() {
                 {index.change.toFixed(2)} ({index.changePercent.toFixed(2)}%)
               </motion.p>
             </CardContent>
+
 
           </Card>
         ))}

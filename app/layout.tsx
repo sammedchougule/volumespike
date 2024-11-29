@@ -25,7 +25,6 @@ export const metadata: Metadata = {
   },
 }
 
-
 export default function RootLayout({
   children,
 }: {
@@ -35,12 +34,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className}`}>
         <StockTicker />
-        <Navbar />
-        <div className="lg:mt-32 md:mt-28 sm:mt-16">
+        <Navbar /> 
+        {/* Add consistent top margin for all screen sizes */}
+        <div className="mt-40 md:mt-36 lg:mt-24">
           {children}
         </div>
       </body>
     </html>
   )
 }
-

@@ -12,8 +12,8 @@ export default function Navbar() {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
 
   return (
-    <nav className="fixed top-8 left-0 right-0 z-50 bg-[#0c0e14] border-b border-gray-800">
-      <div className="container mx-auto px-4">
+    <nav className="fixed py-2 top-8 left-0 right-0 z-50 bg-[#0c0e14] border-b border-gray-800">
+      <div className="container mx-auto px-6">
         <div className="flex flex-wrap items-center justify-between py-2">
           <Link href="/" className="text-xl font-bold text-white mr-4">
             VolumeSpike

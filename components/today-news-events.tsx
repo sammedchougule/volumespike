@@ -77,7 +77,8 @@ export default function TodayNewsEvents() {
           ))}
         </div>
       </CardHeader>
-      <CardContent>
+
+      {/* <CardContent>
         <div className="space-y-4">
           {newsEvents.map((event, index) => (
             <div key={index} className="p-3 hover:bg-gray-700 rounded-lg transition-colors">
@@ -110,7 +111,77 @@ export default function TodayNewsEvents() {
             </div>
           ))}
         </div>
+      </CardContent> */}
+
+      <CardContent>
+        <div className="space-y-4">
+          {/* Check if newsEvents is loading or empty */}
+          {newsEvents.length === 0 ? (
+            // Skeleton loader while loading
+            <div className="space-y-4">
+              {[...Array(5)].map((_, index) => (
+                <div
+                  key={index}
+                  className="p-3 hover:bg-gray-700 rounded-lg transition-colors animate-pulse"
+                >
+                  <div className="flex items-start justify-between">
+                    <div className="space-y-2">
+                      {/* Skeleton for tag */}
+                      <div className="w-24 h-4 bg-gray-600 rounded"></div>
+
+                      {/* Skeleton for title */}
+                      <div className="w-32 h-6 bg-gray-600 rounded"></div>
+
+                      {/* Skeleton for time and type */}
+                      <div className="flex items-center text-sm text-gray-400 space-x-2">
+                        <div className="w-16 h-4 bg-gray-600 rounded"></div>
+                        <div className="w-8 h-4 bg-gray-600 rounded"></div>
+                        <div className="w-16 h-4 bg-gray-600 rounded"></div>
+                      </div>
+                    </div>
+                    {/* Skeleton for ex date */}
+                    <div className="w-16 h-4 bg-gray-600 rounded"></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            // Display the actual content
+            newsEvents.map((event, index) => (
+              <div key={index} className="p-3 hover:bg-gray-700 rounded-lg transition-colors">
+                <div className="flex items-start justify-between">
+                  <div className="space-y-1">
+                    {event.tag && (
+                      <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-500/10 text-blue-500">
+                        {event.tag}
+                      </span>
+                    )}
+                    {event.isUrgent && (
+                      <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-500/10 text-red-500 ml-2">
+                        URGENT
+                      </span>
+                    )}
+                    <h3 className="text-white font-medium">{event.title}</h3>
+                    <div className="flex items-center text-sm text-gray-400">
+                      <span>{event.time}</span>
+                      <span className="mx-2">•</span>
+                      <span>{event.type}</span>
+                    </div>
+                  </div>
+                  {event.exDate && (
+                    <div className="text-right text-sm">
+                      <p className="text-gray-400">{event.exDate}</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))
+          )}
+        </div>
       </CardContent>
+
+
+
     </Card>
   )
 }

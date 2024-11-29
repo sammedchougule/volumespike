@@ -7,7 +7,7 @@ interface Stock {
   symbol: string
   name: string
   price: number
-  change: number
+  chg_percentage: number
 }
 
 export default function StockTicker() {
@@ -23,11 +23,14 @@ export default function StockTicker() {
           throw new Error(`HTTP error! status: ${res.status}`)
         }
         const data = await res.json()
-        if (!data.stocks || !Array.isArray(data.stocks)) {
+        // console.log(data);
+        
+        if (!data || !Array.isArray(data)) {
           throw new Error('Invalid data format')
         }
-        setStocks(data.stocks)
+        setStocks(data)
         setIsLoading(false)
+        
       } catch (err) {
         console.error('Error fetching stocks:', err)
         setError('Failed to load stocks. Please try again later.')
@@ -49,10 +52,10 @@ export default function StockTicker() {
             <span className="ml-1">{stock.price.toFixed(2)}</span>
             <span 
               className={`ml-1 font-semibold ${
-                stock.change >= 0 ? 'text-green-500' : 'text-red-500'
+                stock.chg_percentage >= 0 ? 'text-green-500' : 'text-red-500'
               }`}
             >
-              {stock.change >= 0 ? '▲' : '▼'} {Math.abs(stock.change)}%
+              {stock.chg_percentage >= 0 ? '▲' : '▼'} {Math.abs(stock.chg_percentage)}%
             </span>
             {index < stocks.length - 1 && (
               <span className="mx-3 text-gray-600">|</span>

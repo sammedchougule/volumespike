@@ -36,7 +36,7 @@ export default function RootLayout({
         <StockTicker />
         <Navbar /> 
         {/* Add consistent top margin for all screen sizes */}
-        <div className="mt-40 md:mt-36 lg:mt-24">
+        <div className="mt-40 md:mt-28 lg:mt-30">
           {children}
         </div>
       </body>

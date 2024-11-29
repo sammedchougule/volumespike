@@ -30,7 +30,7 @@ export default function Indices() {
 
   return (
     <div className="space-y-8">
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {displayedIndices.map((index) => (
           <Card key={index.name} className="shadow-lg bg-gray-800">
             

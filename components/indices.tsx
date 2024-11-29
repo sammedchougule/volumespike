@@ -26,7 +26,7 @@ const indices: Index[] = [
 export default function Indices() {
   const [showAll, setShowAll] = useState(false)
 
-  const displayedIndices = showAll ? indices : indices.slice(0, 6)
+  const displayedIndices = showAll ? indices : indices.slice(0, 4)
 
   return (
     <div className="space-y-8">

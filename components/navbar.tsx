@@ -9,7 +9,7 @@ import { User, Home, BarChart2, Layers, Globe, FileText, PieChart } from 'lucide
 
 
 export default function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+ // const [isMenuOpen, setIsMenuOpen] = useState(false)
 
  // const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
 

@@ -39,8 +39,11 @@ export default function Navbar() {
             } sm:max-h-screen sm:opacity-100 overflow-hidden transition-all duration-300 ease-in-out md:flex md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-6 w-full md:w-auto mt-4 md:mt-0 order-4 md:order-3`}
           >
             <div className="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-6">
-              <Link href="/itrabuzz" className="text-white hover:text-gray-300">
+              <Link href="../intrabuzz/" className="text-white hover:text-gray-300">
                 Itrabuzz
+              </Link>
+              <Link href="/heatmap" className="text-white hover:text-gray-300">
+                Heatmap
               </Link>
               <Link href="/sectors" className="text-white hover:text-gray-300">
                 Sectors

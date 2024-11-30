@@ -221,7 +221,7 @@ export default function TodayStocks() {
         return data.stocks
           .filter((stock) => stock.chg_percentage > 0)
           .sort((a, b) => b.chg_percentage - a.chg_percentage)
-          .slice(0, 100);
+          .slice(0, 50);
       case 'losers':
         return data.stocks
           .filter((stock) => stock.chg_percentage < 0)

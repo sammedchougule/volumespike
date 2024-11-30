@@ -93,7 +93,7 @@ export default function Navbar() {
         <div className="flex justify-around items-center py-2">
           <Link href="../intrabuzz/" className="text-white hover:text-gray-300 flex flex-col items-center">
             <Home className="h-6 w-6" />
-            <span className="text-xs">IntraBuzz</span>
+            <span className="text-xs">IntraBuzz1</span>
           </Link>
           <Link href="/heatmap" className="text-white hover:text-gray-300 flex flex-col items-center">
             <BarChart2 className="h-6 w-6" />

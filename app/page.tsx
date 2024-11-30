@@ -1,7 +1,6 @@
 import Indices from '@/components/indices'
 import TodayStocks from '@/components/today-stocks'
 import TodayNewsEvents from '@/components/today-news-events'
-import WebSockClient from './webSockClient'
 
 export default function Home() {
   return (

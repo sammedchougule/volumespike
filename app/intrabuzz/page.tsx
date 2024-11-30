@@ -12,7 +12,7 @@ export default function ItrabuzzPage() {
           <h2 className="text-2xl font-semibold text-white mb-4">Featured Indices</h2>
           <ul className="space-y-2">
             <li>
-              <Link href="/itrabuzz/nifty50">
+              <Link href="/nifty50">
                 <a className="text-blue-400 hover:text-blue-300">Nifty 50 Stocks</a>
               </Link>
             </li>

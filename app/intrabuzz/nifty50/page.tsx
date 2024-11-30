@@ -1,4 +1,5 @@
 // app/itrabuzz/nifty50/page.tsx
+"use client";
 
 import { useState, useEffect } from 'react'
 import { fetchStockData } from '@/utils/fetchStockData'

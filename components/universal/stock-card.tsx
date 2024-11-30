@@ -1,5 +1,4 @@
 import { Card, CardContent } from "@/components/ui/card"
-import { Stock } from "@/types/stock";
 import { ArrowUpIcon, ArrowDownIcon } from "lucide-react"
 
 interface StockCardProps {

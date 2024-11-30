@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 //import { User, Menu, X } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+//import { Button } from '@/components/ui/button'
 import SearchInput from './search-input'
 import { User, Home, BarChart2, Layers, Globe, FileText, PieChart } from 'lucide-react'
 
@@ -11,7 +11,7 @@ import { User, Home, BarChart2, Layers, Globe, FileText, PieChart } from 'lucide
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
+ // const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
 
   return (
     // <nav className="fixed py-2 top-8 left-0 right-0 z-50 bg-[#0c0e14] border-b border-gray-800">

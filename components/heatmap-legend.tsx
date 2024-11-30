@@ -11,7 +11,7 @@ const percentageRanges = [
   export function HeatmapLegend() {
     return (
       <div className="flex items-center gap-1 mb-6">
-        {percentageRanges.map((range, index) => (
+        {percentageRanges.map((range) => (
           <div
             key={range.value}
             className={`px-2 py-1 rounded-sm ${range.color} text-white text-xs font-medium`}

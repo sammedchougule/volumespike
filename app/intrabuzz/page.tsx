@@ -14,7 +14,7 @@ export default function ItrabuzzPage() {
             <li>
               <Link href="/intrabuzz/nifty50" className="text-blue-400 hover:text-blue-300">
                 Nifty 50 Stocks
-              </Link>
+              </ Link>
             </li>
             <li>
               <Link href="/heatmap" className="text-blue-400 hover:text-blue-300">

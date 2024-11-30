@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { HeatmapLegend } from '@/components/heatmap-legend'
 import { fetchStockData } from '@/utils/fetchStockData'
 
+
 export default function HeatmapPage() {
   const [stocks, setStocks] = useState<Stock[]>([])
   const [sectors, setSectors] = useState<string[]>([])
@@ -95,13 +96,14 @@ export default function HeatmapPage() {
                 style={{ backgroundColor: getBackgroundColor(stock.chg_percentage) }}
                 className="rounded-lg transition-colors"
               >
-                <StockCard
+                <StockCard 
                   name={stock.name}
                   symbol={stock.symbol}
                   price={stock.price}
-                  change={stock.chg_rs}
-                  changePercent={stock.chg_percentage}
+                  chg_rs={stock.chg_rs}
+                  chg_percentage={stock.chg_percentage}
                 />
+
               </div>
             ))}
           </div>

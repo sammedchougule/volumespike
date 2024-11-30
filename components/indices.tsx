@@ -33,14 +33,7 @@ export default function Indices() {
       <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {displayedIndices.map((index) => (
           <Card key={index.name} className="shadow-lg bg-gray-800">
-            
-            {/* <CardContent className="p-4">
-              <h3 className="text-sm font-medium text-gray-300">{index.name}</h3>
-              <p className="text-xl sm:text-2xl font-bold mt-1 text-white">{index.value}</p>
-              <p className={`text-sm ${index.change > 0 ? 'text-green-500' : 'text-red-500'}`}>
-                {index.change > 0 ? '+' : ''}{index.change.toFixed(2)} ({index.changePercent.toFixed(2)}%)
-              </p>
-            </CardContent> */}
+
 
             <CardContent className="p-4">
               {/* Apply margin/padding for responsive spacing */}

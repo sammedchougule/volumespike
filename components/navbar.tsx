@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import SearchInput from './search-input'
-import { User, Home, Search, BarChart2, Layers, FileText } from 'lucide-react'
+import { User, Home, SquareActivity, Layers,  Sliders, LayoutGrid } from 'lucide-react'
 import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
@@ -31,11 +31,11 @@ export default function Navbar() {
           {/* Desktop Navigation Links */}
           <div className="hidden sm:flex space-x-6 ml-4">
             <Link href="../intrabuzz/" className="text-white hover:text-gray-300 flex items-center">
-              <Search className="h-5 w-5 text-blue-500 mr-2" />
+              <SquareActivity className="h-5 w-5 text-blue-500 mr-2" />
               <span className="text-sm">IntraBuzz</span>
             </Link>
             <Link href="/heatmap" className="text-white hover:text-gray-300 flex items-center">
-              <BarChart2 className="h-5 w-5 text-green-500 mr-2" />
+              <LayoutGrid className="h-5 w-5 text-green-500 mr-2" />
               <span className="text-sm">Heatmap</span>
             </Link>
             <Link href="/sectors" className="text-white hover:text-gray-300 flex items-center">
@@ -43,7 +43,7 @@ export default function Navbar() {
               <span className="text-sm">Sectors</span>
             </Link>
             <Link href="/screeners" className="text-white hover:text-gray-300 flex items-center">
-              <FileText className="h-5 w-5 text-red-500 mr-2" />
+              <Sliders className="h-5 w-5 text-red-500 mr-2" />
               <span className="text-sm">Screeners</span>
             </Link>
             <Link href="/portfolio" className="text-white hover:text-gray-300 flex items-center">
@@ -55,94 +55,64 @@ export default function Navbar() {
       </nav>
 
       {/* Bottom Tab Bar for Mobile */}
-
-      {/* <nav className="fixed bottom-4 left-4 right-4 z-50 bg-gray-800 border border-gray-700 shadow-2xl rounded-full sm:hidden">
+      <nav className="fixed bottom-4 left-4 right-4 z-50 bg-gray-800 border border-gray-700 shadow-2xl rounded-2xl sm:hidden">
         <div className="flex justify-around items-center py-2">
-          <Link href="/" className="text-white hover:text-gray-300 flex flex-col items-center">
-            <Home className="h-7 w-7 text-white-500" />
-            <span className="text-xxs text-gray-300">IntraBuzz</span>
+          <Link
+            href="/"
+            className={`text-white flex flex-col items-center ${
+              isActive('/') ? 'bg-[#181D23] rounded-2xl px-2 py-1' : ''
+            }`}
+          >
+            <Home className={`h-6 w-6 ${isActive('/') ? 'text-blue-500' : 'text-white'}`} />
+            <span className={`text-xxs text-gray-300 ${isActive('/') ? 'block' : 'hidden'}`}>Home</span>
           </Link>
-          <Link href="../intrabuzz/" className="text-white hover:text-gray-300 flex flex-col items-center">
-            <Search className="h-7 w-7 text-blue-500" />
-            <span className="text-xxs text-gray-300">IntraBuzz</span>
+          <Link
+            href="/intrabuzz"
+            className={`text-white flex flex-col items-center ${
+              isActive('/intrabuzz') ? 'bg-gray-900 rounded-2xl px-2 py-1' : ''
+            }`}
+          >
+            <SquareActivity className={`h-6 w-6 ${isActive('/intrabuzz') ? 'text-blue-500' : 'text-white'}`} />
+            <span className={`text-xxs text-gray-300 ${isActive('/intrabuzz') ? 'block' : 'hidden'}`}>IntraBuzz</span>
           </Link>
-          <Link href="/heatmap" className="text-white hover:text-gray-300 flex flex-col items-center">
-            <BarChart2 className="h-7 w-7 text-green-500" />
-            <span className="text-xxs text-gray-300">Heatmap</span>
+          <Link
+            href="/heatmap"
+            className={`text-white flex flex-col items-center ${
+              isActive('/heatmap') ? 'bg-[#181D23] rounded-2xl px-2 py-1' : ''
+            }`}
+          >
+            <LayoutGrid className={`h-6 w-6 ${isActive('/heatmap') ? 'text-green-500' : 'text-white'}`} />
+            <span className={`text-xxs text-gray-300 ${isActive('/heatmap') ? 'block' : 'hidden'}`}>Heatmap</span>
           </Link>
-          <Link href="/sectors" className="text-white hover:text-gray-300 flex flex-col items-center">
-            <Layers className="h-7 w-7 text-yellow-500" />
-            <span className="text-xxs text-gray-300">Sectors</span>
+          <Link
+            href="/sectors"
+            className={`text-white flex flex-col items-center ${
+              isActive('/sectors') ? 'bg-[#181D23] rounded-2xl px-2 py-1' : ''
+            }`}
+          >
+            <Layers className={`h-6 w-6 ${isActive('/sectors') ? 'text-yellow-500' : 'text-white'}`} />
+            <span className={`text-xxs text-gray-300 ${isActive('/sectors') ? 'block' : 'hidden'}`}>Sectors</span>
           </Link>
-          <Link href="/screeners" className="text-white hover:text-gray-300 flex flex-col items-center">
-            <FileText className="h-7 w-7 text-red-500" />
-            <span className="text-xxs text-gray-300">Screeners</span>
+          <Link
+            href="/screeners"
+            className={`text-white flex flex-col items-center ${
+              isActive('/screeners') ? 'bg-[#181D23] rounded-2xl px-2 py-1' : ''
+            }`}
+          >
+            <Sliders className={`h-6 w-6 ${isActive('/screeners') ? 'text-red-500' : 'text-white'}`} />
+            <span className={`text-xxs text-gray-300 ${isActive('/screeners') ? 'block' : 'hidden'}`}>Screener</span>
           </Link>
-          <Link href="/portfolio" className="text-white hover:text-gray-300 flex flex-col items-center">
-            <User className="h-7 w-7 text-purple-500" />
-            <span className="text-xxs text-gray-300">Portfolio</span>
+          <Link
+            href="/portfolio"
+            className={`text-white flex flex-col items-center ${
+              isActive('/portfolio') ? 'bg-[#181D23] rounded-2xl px-2 py-1' : ''
+            }`}
+          >
+            <User className={`h-6 w-6 ${isActive('/portfolio') ? 'text-purple-500' : 'text-white'}`} />
+            <span className={`text-xxs text-gray-300 ${isActive('/portfolio') ? 'block' : 'hidden'}`}>Portfolio</span>
           </Link>
         </div>
-      </nav> */}
-
-<nav className="fixed bottom-4 left-4 right-4 z-50 bg-gray-800 border border-gray-700 shadow-2xl rounded-full sm:hidden">
-      <div className="flex justify-around items-center py-2">
-        <Link
-          href="/"
-          className={`flex flex-col items-center p-3 rounded-full ${
-            isActive('/') ? 'bg-[#181D23]' : ''
-          } text-white hover:text-gray-300`}
-        >
-          <Home className="h-7 w-7 text-white-500" />
-          <span className="text-xxs text-gray-300">Home</span>
-        </Link>
-        <Link
-          href="../intrabuzz/"
-          className={`flex flex-col items-center p-3 rounded-full ${
-            isActive('../intrabuzz/') ? 'bg-[#181D23]' : ''
-          } text-white hover:text-gray-300`}
-        >
-          <Search className="h-7 w-7 text-blue-500" />
-          <span className="text-xxs text-gray-300">IntraBuzz</span>
-        </Link>
-        <Link
-          href="/heatmap"
-          className={`flex flex-col items-center p-3 rounded-full ${
-            isActive('/heatmap') ? 'bg-[#181D23]' : ''
-          } text-white hover:text-gray-300`}
-        >
-          <BarChart2 className="h-7 w-7 text-green-500" />
-          <span className="text-xxs text-gray-300">Heatmap</span>
-        </Link>
-        <Link
-          href="/sectors"
-          className={`flex flex-col items-center p-3 rounded-full ${
-            isActive('/sectors') ? 'bg-[#181D23]' : ''
-          } text-white hover:text-gray-300`}
-        >
-          <Layers className="h-7 w-7 text-yellow-500" />
-          <span className="text-xxs text-gray-300">Sectors</span>
-        </Link>
-        <Link
-          href="/screeners"
-          className={`flex flex-col items-center p-3 rounded-full ${
-            isActive('/screeners') ? 'bg-[#181D23]' : ''
-          } text-white hover:text-gray-300`}
-        >
-          <FileText className="h-7 w-7 text-red-500" />
-          <span className="text-xxs text-gray-300">Screeners</span>
-        </Link>
-        <Link
-          href="/portfolio"
-          className={`flex flex-col items-center p-3 rounded-full ${
-            isActive('/portfolio') ? 'bg-[#181D23]' : ''
-          } text-white hover:text-gray-300`}
-        >
-          <User className="h-7 w-7 text-purple-500" />
-          <span className="text-xxs text-gray-300">Portfolio</span>
-        </Link>
-      </div>
-    </nav>
+      </nav>
 
     </>
 

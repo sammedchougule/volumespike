@@ -1,127 +1,153 @@
 'use client'
 
-// import { useState } from 'react'
 import Link from 'next/link'
-//import { User, Menu, X } from 'lucide-react'
-//import { Button } from '@/components/ui/button'
 import SearchInput from './search-input'
-import { User, Home, BarChart2, Layers, Globe, FileText, PieChart } from 'lucide-react'
-
+import { User, Home, Search, BarChart2, Layers, FileText } from 'lucide-react'
+import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
- // const [isMenuOpen, setIsMenuOpen] = useState(false)
 
- // const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
+  const pathname = usePathname(); // Get the current route
+
+  // Utility to check if the link is active
+  const isActive = (path: string) => pathname === path;
 
   return (
-    // <nav className="fixed py-2 top-8 left-0 right-0 z-50 bg-[#0c0e14] border-b border-gray-800">
-    //   <div className="container mx-auto px-6">
-    //     <div className="flex flex-wrap items-center justify-between py-2">
-    //       <Link href="/" className="text-xl font-bold text-white mr-4">
-    //         VolumeSpike
-    //       </Link>
-
-    //       <div className="flex-grow max-w-md my-2 sm:my-0 order-3 sm:order-2 w-full sm:w-auto sm:mx-4">
-    //         <SearchInput />
-    //       </div>
-
-    //       {/* Hamburger Menu Button (Visible on mobile and tablet) */}
-    //       <button 
-    //         className="sm:block md:hidden text-white"
-    //         onClick={toggleMenu}
-    //         aria-label="Toggle menu"
-    //       >
-    //         {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-    //       </button>
-
-    //       {/* Navigation Links (Hidden on mobile/tablet, show on larger screens or when menu is open) */}
-    //       <div 
-    //         className={`${
-    //           isMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
-    //         } sm:max-h-screen sm:opacity-100 overflow-hidden transition-all duration-300 ease-in-out md:flex md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-6 w-full md:w-auto mt-4 md:mt-0 order-4 md:order-3`}
-    //       >
-    //         <div className="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-6">
-    //           <Link href="../intrabuzz/" className="text-white hover:text-gray-300">
-    //             Itrabuzz
-    //           </Link>
-    //           <Link href="/heatmap" className="text-white hover:text-gray-300">
-    //             Heatmap
-    //           </Link>
-    //           <Link href="/sectors" className="text-white hover:text-gray-300">
-    //             Sectors
-    //           </Link>
-    //           <Link href="/oasis" className="text-white hover:text-gray-300">
-    //             Oasis
-    //           </Link>
-    //           <Link href="/screeners" className="text-white hover:text-gray-300">
-    //             Screeners
-    //           </Link>
-    //           <Link href="/fno" className="text-white hover:text-gray-300">
-    //             F&O
-    //           </Link>
-    //           <Link href="/portfolio" className="text-white hover:text-gray-300">
-    //             Portfolio
-    //           </Link>
-    //         </div>
-    //         <Button variant="ghost" size="icon" className="text-white">
-    //           <User className="h-5 w-5" />
-    //           <span className="sr-only">User account</span>
-    //         </Button>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </nav>
 
     <>
-      {/* Top Navbar (For Search and Branding) */}
+      {/* Top Navbar */}
       <nav className="fixed py-2 top-8 left-0 right-0 z-50 bg-[#0c0e14] border-b border-gray-800">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-wrap items-center justify-between py-2">
-            <Link href="/" className="text-xl font-bold text-white mr-4">
-              VolumeSpike
-            </Link>
+        <div className="container mx-auto px-6 flex justify-between items-center">
 
-            <div className="flex-grow max-w-md my-2 sm:my-0 w-full sm:w-auto sm:mx-4">
-              <SearchInput />
-            </div>
+          <Link href="/" className="text-xl font-bold text-white mr-4 hidden lg:block">
+            VolumeSpike
+          </Link>
+
+          {/* Search Input */}
+          <div className="flex-grow max-w-md">
+            <SearchInput />
+          </div>
+
+          {/* Desktop Navigation Links */}
+          <div className="hidden sm:flex space-x-6 ml-4">
+            <Link href="../intrabuzz/" className="text-white hover:text-gray-300 flex items-center">
+              <Search className="h-5 w-5 text-blue-500 mr-2" />
+              <span className="text-sm">IntraBuzz</span>
+            </Link>
+            <Link href="/heatmap" className="text-white hover:text-gray-300 flex items-center">
+              <BarChart2 className="h-5 w-5 text-green-500 mr-2" />
+              <span className="text-sm">Heatmap</span>
+            </Link>
+            <Link href="/sectors" className="text-white hover:text-gray-300 flex items-center">
+              <Layers className="h-5 w-5 text-yellow-500 mr-2" />
+              <span className="text-sm">Sectors</span>
+            </Link>
+            <Link href="/screeners" className="text-white hover:text-gray-300 flex items-center">
+              <FileText className="h-5 w-5 text-red-500 mr-2" />
+              <span className="text-sm">Screeners</span>
+            </Link>
+            <Link href="/portfolio" className="text-white hover:text-gray-300 flex items-center">
+              <User className="h-5 w-5 text-purple-500 mr-2" />
+              <span className="text-sm">Portfolio</span>
+            </Link>
           </div>
         </div>
       </nav>
 
-      {/* Bottom Tab Bar (For Navigation Links) */}
-      <nav className="fixed bottom-0 left-0 right-0 z-50 bg-[#0c0e14] border-t border-gray-800 sm:hidden">
+      {/* Bottom Tab Bar for Mobile */}
+
+      {/* <nav className="fixed bottom-4 left-4 right-4 z-50 bg-gray-800 border border-gray-700 shadow-2xl rounded-full sm:hidden">
         <div className="flex justify-around items-center py-2">
+          <Link href="/" className="text-white hover:text-gray-300 flex flex-col items-center">
+            <Home className="h-7 w-7 text-white-500" />
+            <span className="text-xxs text-gray-300">IntraBuzz</span>
+          </Link>
           <Link href="../intrabuzz/" className="text-white hover:text-gray-300 flex flex-col items-center">
-            <Home className="h-6 w-6" />
-            <span className="text-xs">IntraBuzz1</span>
+            <Search className="h-7 w-7 text-blue-500" />
+            <span className="text-xxs text-gray-300">IntraBuzz</span>
           </Link>
           <Link href="/heatmap" className="text-white hover:text-gray-300 flex flex-col items-center">
-            <BarChart2 className="h-6 w-6" />
-            <span className="text-xs">Heatmap</span>
+            <BarChart2 className="h-7 w-7 text-green-500" />
+            <span className="text-xxs text-gray-300">Heatmap</span>
           </Link>
           <Link href="/sectors" className="text-white hover:text-gray-300 flex flex-col items-center">
-            <Layers className="h-6 w-6" />
-            <span className="text-xs">Sectors</span>
-          </Link>
-          <Link href="/oasis" className="text-white hover:text-gray-300 flex flex-col items-center">
-            <Globe className="h-6 w-6" />
-            <span className="text-xs">Oasis</span>
+            <Layers className="h-7 w-7 text-yellow-500" />
+            <span className="text-xxs text-gray-300">Sectors</span>
           </Link>
           <Link href="/screeners" className="text-white hover:text-gray-300 flex flex-col items-center">
-            <FileText className="h-6 w-6" />
-            <span className="text-xs">Screeners</span>
-          </Link>
-          <Link href="/fno" className="text-white hover:text-gray-300 flex flex-col items-center">
-            <PieChart className="h-6 w-6" />
-            <span className="text-xs">F&O</span>
+            <FileText className="h-7 w-7 text-red-500" />
+            <span className="text-xxs text-gray-300">Screeners</span>
           </Link>
           <Link href="/portfolio" className="text-white hover:text-gray-300 flex flex-col items-center">
-            <User className="h-6 w-6" />
-            <span className="text-xs">Portfolio</span>
+            <User className="h-7 w-7 text-purple-500" />
+            <span className="text-xxs text-gray-300">Portfolio</span>
           </Link>
         </div>
-      </nav>
+      </nav> */}
+
+<nav className="fixed bottom-4 left-4 right-4 z-50 bg-gray-800 border border-gray-700 shadow-2xl rounded-full sm:hidden">
+      <div className="flex justify-around items-center py-2">
+        <Link
+          href="/"
+          className={`flex flex-col items-center p-3 rounded-full ${
+            isActive('/') ? 'bg-[#181D23]' : ''
+          } text-white hover:text-gray-300`}
+        >
+          <Home className="h-7 w-7 text-white-500" />
+          <span className="text-xxs text-gray-300">Home</span>
+        </Link>
+        <Link
+          href="../intrabuzz/"
+          className={`flex flex-col items-center p-3 rounded-full ${
+            isActive('../intrabuzz/') ? 'bg-[#181D23]' : ''
+          } text-white hover:text-gray-300`}
+        >
+          <Search className="h-7 w-7 text-blue-500" />
+          <span className="text-xxs text-gray-300">IntraBuzz</span>
+        </Link>
+        <Link
+          href="/heatmap"
+          className={`flex flex-col items-center p-3 rounded-full ${
+            isActive('/heatmap') ? 'bg-[#181D23]' : ''
+          } text-white hover:text-gray-300`}
+        >
+          <BarChart2 className="h-7 w-7 text-green-500" />
+          <span className="text-xxs text-gray-300">Heatmap</span>
+        </Link>
+        <Link
+          href="/sectors"
+          className={`flex flex-col items-center p-3 rounded-full ${
+            isActive('/sectors') ? 'bg-[#181D23]' : ''
+          } text-white hover:text-gray-300`}
+        >
+          <Layers className="h-7 w-7 text-yellow-500" />
+          <span className="text-xxs text-gray-300">Sectors</span>
+        </Link>
+        <Link
+          href="/screeners"
+          className={`flex flex-col items-center p-3 rounded-full ${
+            isActive('/screeners') ? 'bg-[#181D23]' : ''
+          } text-white hover:text-gray-300`}
+        >
+          <FileText className="h-7 w-7 text-red-500" />
+          <span className="text-xxs text-gray-300">Screeners</span>
+        </Link>
+        <Link
+          href="/portfolio"
+          className={`flex flex-col items-center p-3 rounded-full ${
+            isActive('/portfolio') ? 'bg-[#181D23]' : ''
+          } text-white hover:text-gray-300`}
+        >
+          <User className="h-7 w-7 text-purple-500" />
+          <span className="text-xxs text-gray-300">Portfolio</span>
+        </Link>
+      </div>
+    </nav>
+
     </>
 
+    
   )
-}
+};
+
+

@@ -18,6 +18,9 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontSize: {
+        'xxs': '0.700rem', // Smaller than text-xs (10px)
+      },
       animation: {
         blink: 'blink 1s ease-in-out',
       },

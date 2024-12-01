@@ -19,7 +19,7 @@ export default function RootLayout({
       <body className={`${inter.className}`}>
         <StockTicker />
         <Navbar /> 
-        <div className="mt-40 md:mt-32 lg:mt-28">
+        <div className="mt-20 md:mt-30 lg:mt-20">
           {children}
         </div>
       </body>

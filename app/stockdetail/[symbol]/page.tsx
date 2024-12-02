@@ -8,8 +8,9 @@ import { ArrowUp, ArrowDown, Share2 } from 'lucide-react'
 import { fetchStockData } from '@/utils/fetchStockData'
 import Link from 'next/link'
 import { Stock } from '@/types/stock'
+import { StockChart } from '@/components/universal/stock-chart'
 
-const timeRanges = ['1D', '5D', '1M', '6M', 'YTD', '1Y', '5Y', 'MAX']
+//const timeRanges = ['1D', '5D', '1M', '6M', 'YTD', '1Y', '5Y', 'MAX']
 
 const news = [
   {
@@ -33,7 +34,7 @@ const news = [
 ]
 
 export default function StockDetailPage() {
-  const [selectedRange, setSelectedRange] = useState('1D')
+  //const [selectedRange, setSelectedRange] = useState('1D')
   const [stock, setStock] = useState<Stock | null>(null)
   const [sectorStocks, setSectorStocks] = useState<Stock []>([])
   const [isLoading, setIsLoading] = useState(true)
@@ -86,7 +87,7 @@ export default function StockDetailPage() {
         <h1 className="text-2xl font-bold mb-2">{stock.stock_name}</h1>
         <div className="flex items-center gap-2">
           <span className="px-3 py-1 bg-gray-800 rounded-full text-sm">Stock</span>
-          <span className="px-3 py-1 bg-gray-800 rounded-full text-sm">{stock.exchange} listed security</span>
+          <span className="px-3 py-1 bg-gray-800 rounded-full text-sm">{stock.exchange}</span>
         </div>
       </div>
       <div className="flex gap-2">
@@ -103,7 +104,7 @@ export default function StockDetailPage() {
     {/* Content Layout */}
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
       {/* Main Content (2 Columns on Desktop) */}
-      <div className="lg:col-span-2 order-2 lg:order-1">
+      <div className="lg:col-span-2 order-1 lg:order-1">
         {/* Stock Info */}
         <div className="mb-6">
           <div className="flex items-baseline gap-4 mb-4">
@@ -120,25 +121,7 @@ export default function StockDetailPage() {
         </div>
 
         {/* Chart */}
-        <div className="bg-[#161b22] border border-[#30363d] rounded-lg h-[300px] mb-6"></div>
-
-        {/* Time Ranges */}
-        <div className="flex gap-2 mb-8 overflow-x-auto">
-          {timeRanges.map((range) => (
-            <Button
-              key={range}
-              variant="outline"
-              className={`border-gray-800 ${
-                selectedRange === range 
-                ? 'bg-gray-800 border-gray-400 text-white' 
-                : 'text-gray-500 hover:bg-gray-900 hover:border-gray-400'
-            }`}
-              onClick={() => setSelectedRange(range)}
-            >
-              {range}
-            </Button>
-          ))}
-        </div>
+        <StockChart symbol={stock.symbol} />
 
         {/* Similar Stocks */}
         <div className="mb-8">
@@ -171,7 +154,7 @@ export default function StockDetailPage() {
         </div>
 
         {/* News Section */}
-        <div className="mb-8">
+        <div className="order-4 mb-8">
           <h2 className="text-xl font-bold mb-4">In the News</h2>
           <div className="space-y-4">
             {news.map((item, index) => (
@@ -199,47 +182,10 @@ export default function StockDetailPage() {
             ))}
           </div>
         </div>
-
-        {/* About Section */}
-        <div className="mb-8 lg:mb-0 order-4 lg:order-2">
-          <h2 className="text-xl font-bold mb-4">About</h2>
-          <Card className="bg-[#161b22] border-gray-700">
-            <CardContent className="p-6">
-              <p className="text-white">
-                {stock.stock_name} is a company listed on the {stock.exchange}. It operates in the {stock.sector} sector, specifically in the {stock.industry} industry.
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                <div>
-                  <p className="text-white mb-1">SECTOR</p>
-                  <p className="text-white">{stock.sector}</p>
-                </div>
-                <div>
-                  <p className="text-white mb-1">INDUSTRY</p>
-                  <p className="text-white">{stock.industry}</p>
-                </div>
-                <div>
-                  <p className="text-white mb-1">WEBSITE</p>
-                  <a
-                    href={stock.website_link}
-                    className="text-blue-400"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {stock.website_link}
-                  </a>
-                </div>
-                <div>
-                  <p className="text-white mb-1">VOLUME</p>
-                  <p className="text-white">{stock.volume}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
       </div>
 
       {/* Sidebar (Mobile) */}
-      <div className="lg:col-span-1 order-3 lg:order-3 mb-8 lg:mb-0">
+      <div className="lg:col-span-1 order-3 lg:order-2 mb-8 lg:mb-0">
         <Card className="bg-[#161b22] border-gray-700">
           <CardContent className="p-6">
             <div className="space-y-4">
@@ -253,6 +199,43 @@ export default function StockDetailPage() {
           </CardContent>
         </Card>
       </div>
+
+      {/* About Section */}
+      <div className="order-5 lg:order-3 mb-8">
+        <h2 className="text-xl font-bold mb-4">About</h2>
+        <Card className="bg-[#161b22] border-gray-700">
+          <CardContent className="p-6">
+            <p className="text-white">
+              {stock.stock_name} is a company listed on the {stock.exchange}. It operates in the {stock.sector} sector, specifically in the {stock.industry} industry.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+              <div>
+                <p className="text-white mb-1">SECTOR</p>
+                <p className="text-white">{stock.sector}</p>
+              </div>
+              <div>
+                <p className="text-white mb-1">INDUSTRY</p>
+                <p className="text-white">{stock.industry}</p>
+              </div>
+              <div>
+                <p className="text-white mb-1">WEBSITE</p>
+                <a
+                  href={stock.website_link}
+                  className="text-blue-400"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {stock.website_link}
+                </a>
+              </div>
+              <div>
+                <p className="text-white mb-1">VOLUME</p>
+                <p className="text-white">{stock.volume}</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   </div>
 </main>
@@ -262,5 +245,4 @@ export default function StockDetailPage() {
 
   )
 }
-
 

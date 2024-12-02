@@ -49,7 +49,7 @@ export default function StockDetailPage() {
         const data = await fetchStockData(symbol)
         setStock(data)
         const allStocks = await fetchStockData()
-        const relatedStocks = allStocks.filter((s: any) => s.sector === data.sector && s.symbol !== symbol).slice(0, 5)
+        const relatedStocks = allStocks.filter((s: Stock) => s.sector === data.sector && s.symbol !== symbol).slice(0, 5)
         setSectorStocks(relatedStocks)
       } catch (err) {
         console.error('Error fetching stock data:', err)

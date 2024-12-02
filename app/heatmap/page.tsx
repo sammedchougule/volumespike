@@ -5,6 +5,7 @@ import { Stock } from '@/types/stock'
 import { StockCard } from "@/components/universal/stock-card"
 import { Button } from '@/components/ui/button'
 import { fetchStockData } from '@/utils/fetchStockData'
+import Link from 'next/link'
 
 
 export default function HeatmapPage() {
@@ -35,13 +36,7 @@ export default function HeatmapPage() {
     loadStocks()
   }, [])
 
-  // const getBackgroundColor = (changePercent: number): string => {
-  //   const intensity = Math.min(Math.abs(changePercent) * 20, 100)
-  //   return changePercent >= 0
-  //     ? `rgba(0, 255, 0, ${intensity / 100})`
-  //     : `rgba(255, 0, 0, ${intensity / 100})`
-  // }
-
+    // Coolor coding for the card according to chg_percentage
   const getBackgroundColor = (changePercent: number) => {
     const maxPercent = 10; // Max percentage for full transition (10%)
   
@@ -108,6 +103,7 @@ export default function HeatmapPage() {
           </h2>
           <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
             {filteredStocks.map((stock) => (
+            <Link href={`/stockdetail/${stock.symbol}`} key={stock.symbol}>
               <div
                 key={stock.symbol}
                 style={{ backgroundColor: getBackgroundColor(stock.chg_percentage) }}
@@ -120,8 +116,8 @@ export default function HeatmapPage() {
                   chg_rs={stock.chg_rs}
                   chg_percentage={stock.chg_percentage}
                 />
-
               </div>
+            </Link>
             ))}
           </div>
         </div>

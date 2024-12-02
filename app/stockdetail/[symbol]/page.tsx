@@ -156,10 +156,10 @@ export default function StockDetailPage() {
                       <span className="text-white text-sm">₹{relatedStock.price.toFixed(2)}</span>
                       <span
                         className={`text-xs ${
-                          parseFloat(relatedStock.chg_percentage) >= 0 ? 'text-[#3fb950]' : 'text-[#f85149]'
+                          (relatedStock.chg_percentage) >= 0 ? 'text-[#3fb950]' : 'text-[#f85149]'
                         }`}
                       >
-                        {parseFloat(relatedStock.chg_percentage) >= 0 ? '+' : ''}
+                        {(relatedStock.chg_percentage) >= 0 ? '+' : ''}
                         {relatedStock.chg_percentage}%
                       </span>
                     </div>

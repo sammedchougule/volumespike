@@ -28,21 +28,19 @@ const Dialog = ({ open, onOpenChange, children }: DialogProps) => {
   );
 };
 
-Dialog.Content = ({ children }: { children: React.ReactNode }) => (
+const Content = ({ children }: { children: React.ReactNode }) => (
   <div className="p-4">{children}</div>
 );
 
-Dialog.Header = ({ children }: { children: React.ReactNode }) => (
-  <div className="flex flex-col p-4 border-b border-gray-600">
-    {children}
-  </div>
+const Header = ({ children }: { children: React.ReactNode }) => (
+  <div className="flex flex-col p-4 border-b border-gray-600">{children}</div>
 );
 
-Dialog.Title = ({ children }: { children: React.ReactNode }) => (
+const Title = ({ children }: { children: React.ReactNode }) => (
   <div className="text-lg font-semibold text-white">{children}</div>
 );
 
-Dialog.Close = ({ onClick }: { onClick: () => void }) => (
+const Close = ({ onClick }: { onClick: () => void }) => (
   <button
     onClick={onClick}
     className="absolute top-3 right-3 text-gray-400 hover:text-white"
@@ -51,4 +49,4 @@ Dialog.Close = ({ onClick }: { onClick: () => void }) => (
   </button>
 );
 
-export { Dialog };
+export { Dialog, Content, Header, Title, Close };

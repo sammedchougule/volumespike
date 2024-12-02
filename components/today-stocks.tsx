@@ -90,7 +90,7 @@ export default function TodayStocks() {
     <>
       <Card className="shadow-lg bg-gray-800 min-h-[500px]">
         <CardHeader className="flex flex-col space-y-4">
-          <CardTitle className="text-white">Today's Top</CardTitle>
+          <CardTitle className="text-white">Today&apos;s Top</CardTitle>
           <div className="flex gap-2 overflow-x-auto whitespace-nowrap">
             {tabData.map((tab) => (
               <button

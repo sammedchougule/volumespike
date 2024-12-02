@@ -10,7 +10,7 @@ interface StockChartProps {
 
 const defaultTimeRanges = ['1D', '5D', '1M', '6M', 'YTD', '1Y', '5Y', 'MAX']
 
-export function StockChart({ symbol, timeRanges = defaultTimeRanges }: StockChartProps) {
+export function StockChart({  timeRanges = defaultTimeRanges }: StockChartProps) {
   const [selectedRange, setSelectedRange] = useState(timeRanges[0])
 
   return (

@@ -1,10 +1,11 @@
 // StockPreviewModal.tsx
-import { Dialog } from "@/components/ui/dialog" // Use the dialog from the new dialog.tsx
+import { Dialog, Content, Header, Title, Close } from "@/components/ui/dialog"; 
+ // Use the dialog from the new dialog.tsx
 import { Button } from "@/components/ui/button"
 import { ArrowUpIcon, ArrowDownIcon, SquareArrowOutUpRight } from 'lucide-react'
 import Link from 'next/link'
 import { Stock } from '@/types/stock'
-import { StockChart } from "./universal/stock-chart"
+//import { StockChart } from "./universal/stock-chart"
 
 interface StockPreviewModalProps {
   stock: Stock | null
@@ -17,11 +18,11 @@ export function StockPreviewModal({ stock, isOpen, onClose }: StockPreviewModalP
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <Dialog.Content>
-        <Dialog.Header>
+      <Content>
+        <Header>
           <div className="flex justify-between items-start w-full">
-            <Dialog.Title>{stock.stock_name}</Dialog.Title>
-            <Dialog.Close onClick={onClose} />
+            <Title>{stock.stock_name}</Title>
+            <Close onClick={onClose} />
 
              <Link href={`/stockdetail/${stock.symbol}`}>
               <Button size="icon" className="h-8 w-8 bg-gray-800 border hover:border-gray-400">
@@ -36,7 +37,7 @@ export function StockPreviewModal({ stock, isOpen, onClose }: StockPreviewModalP
               <span className="text-xs px-2 py-0.5 bg-gray-800 rounded-full">{stock.exchange}</span>
             </div>
           </div>
-        </Dialog.Header>
+        </Header>
 
         {/* Chart */}
         {/* <StockChart symbol={stock.symbol} /> */}
@@ -83,7 +84,7 @@ export function StockPreviewModal({ stock, isOpen, onClose }: StockPreviewModalP
             </p>
           </div>
         </div>
-      </Dialog.Content>
+      </Content>
     </Dialog>
   )
 }

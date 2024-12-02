@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { ArrowUp, ArrowDown, Share2 } from 'lucide-react'
 import { fetchStockData } from '@/utils/fetchStockData'
 import Link from 'next/link'
-
+import { Stock } from '@/types/stock'
 
 const timeRanges = ['1D', '5D', '1M', '6M', 'YTD', '1Y', '5Y', 'MAX']
 
@@ -34,8 +34,8 @@ const news = [
 
 export default function StockDetailPage() {
   const [selectedRange, setSelectedRange] = useState('1D')
-  const [stock, setStock] = useState<any>(null)
-  const [sectorStocks, setSectorStocks] = useState<any[]>([])
+  const [stock, setStock] = useState<Stock | null>(null)
+  const [sectorStocks, setSectorStocks] = useState<Stock []>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const params = useParams()
@@ -71,193 +71,12 @@ export default function StockDetailPage() {
     { label: 'YEAR RANGE', value: `₹${stock.year_low} - ₹${stock.year_high}` },
     { label: 'MARKET CAP', value: `${stock.marketcap} INR` },
     { label: 'AVG VOLUME', value: stock.avg_volume },
-    { label: 'P/E RATIO', value: stock.eps !== 'Error' ? (stock.price / parseFloat(stock.eps)).toFixed(2) : 'N/A' },
+    { label: 'P/E RATIO', value: stock.eps ? (stock.price / stock.eps).toFixed(2) : 'N/A' },
     { label: 'DIVIDEND YIELD', value: 'N/A' }, 
     { label: 'PRIMARY EXCHANGE', value: stock.exchange },
   ]
 
   return (
-    // <main className="min-h-screen bg-[#0d1117] text-white">
-    //   <div className="container mx-auto px-4 py-8">
-    //     <div className="flex justify-between items-start mb-6">
-    //       <div>
-    //         <h1 className="text-2xl font-bold mb-2">
-    //           {stock.stock_name}
-    //         </h1>
-    //         <div className="flex items-center gap-2">
-    //           <span className="px-3 py-1 bg-gray-800 rounded-full text-sm">Stock</span>
-    //           <span className="px-3 py-1 bg-gray-800 rounded-full text-sm">{stock.exchange} listed security</span>
-    //         </div>
-    //       </div>
-    //       <div className="flex gap-2">
-    //         <Button variant="outline" className="gap-2 border-gray-800 text-white bg-gray-800 hover:bg-gray-900 hover:border-gray-400">
-    //           Following
-    //         </Button>
-    //         <Button variant="outline" className="gap-2 border-gray-800 text-white bg-gray-800 hover:bg-gray-900 hover:border-gray-400">
-    //           <Share2 className="h-4 w-4" />
-    //           Share
-    //         </Button>
-    //       </div>
-    //     </div>
-
-    //     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-    //       <div className="lg:col-span-2">
-    //         <div className="mb-6">
-    //           <div className="flex items-baseline gap-4 mb-4">
-    //             <h2 className="text-4xl font-bold">₹{stock.price.toFixed(2)}</h2>
-    //             <div className={`flex items-center ${parseFloat(stock.chg_percentage) >= 0 ? 'text-[#3fb950]' : 'text-[#f85149]'}`}>
-    //               {parseFloat(stock.chg_percentage) >= 0 ? <ArrowUp className="h-4 w-4" /> : <ArrowDown className="h-4 w-4" />}
-    //               <span className="font-semibold">{Math.abs(parseFloat(stock.chg_percentage)).toFixed(2)}%</span>
-    //               <span className="text-[#c9d1d9] ml-2">{parseFloat(stock.chg_rs) >= 0 ? '+' : ''}{stock.chg_rs} Today</span>
-    //             </div>
-    //           </div>
-    //           <p className="text-white">
-    //             {new Date().toLocaleString()} · INR · {stock.exchange} · Disclaimer
-    //           </p>
-    //         </div>
-
-    //         {/* Chart placeholder */}
-    //         <div className="bg-[#161b22] border border-[#30363d] rounded-lg h-[300px] mb-6"></div>
-
-    //         <div className="flex gap-2 mb-8 overflow-x-auto">
-    //           {timeRanges.map((range) => (
-    //             <Button
-    //               key={range}
-    //               variant="outline"
-    //               className={`border-gray-800 ${
-    //                 selectedRange === range 
-    //                 ? 'bg-gray-800 border-gray-400 text-white' 
-    //                 : 'text-gray-500 hover:bg-gray-900 hover:border-gray-400'
-    //             }`}
-    //               onClick={() => setSelectedRange(range)}
-    //             >
-    //               {range}
-    //             </Button>
-    //           ))}
-    //         </div>
-
-            
-
-    //         {/* Similar Stocks */}
-    //         <div className="mb-8">
-    //             <h2 className="text-xl font-bold mb-4">Similar Stocks</h2>
-    //             <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
-    //                 {sectorStocks.map((relatedStock) => (
-    //                 <Link href={`/stockdetail/${relatedStock.symbol}`} key={relatedStock.symbol}>
-    //                     <Card className="bg-[#161b22] border-gray-700 w-40 h-32 flex-shrink-0">
-    //                     <CardContent className="p-3 flex flex-col justify-between h-full">
-    //                         <div>
-    //                         <h3 className="font-bold text-white text-sm mb-1 truncate">{relatedStock.symbol}</h3>
-    //                         <p className="text-xs text-gray-400 truncate">{relatedStock.stock_name}</p>
-    //                         </div>
-    //                         <div className="flex justify-between items-center">
-    //                         <span className="text-white text-sm">₹{relatedStock.price.toFixed(2)}</span>
-    //                         <span
-    //                             className={`text-xs ${
-    //                             parseFloat(relatedStock.chg_percentage) >= 0 ? 'text-[#3fb950]' : 'text-[#f85149]'
-    //                             }`}
-    //                         >
-    //                             {parseFloat(relatedStock.chg_percentage) >= 0 ? '+' : ''}
-    //                             {relatedStock.chg_percentage}%
-    //                         </span>
-    //                         </div>
-    //                     </CardContent>
-    //                     </Card>
-    //                 </Link>
-    //                 ))}
-    //             </div>
-    //         </div>
-
-
-    //         {/* News Section */}
-    //         <div className="mb-8">
-    //             <h2 className="text-xl font-bold mb-4">In the News</h2>
-    //             <div className="space-y-4">
-    //                 {news.map((item, index) => (
-    //                 <Card key={index} className="bg-[#161b22] border-gray-700">
-    //                     <CardContent className="p-4">
-    //                     <div className="flex gap-4">
-    //                         <img
-    //                         src={item.image}
-    //                         alt={item.title}
-    //                         className="w-20 h-20 object-cover rounded"
-    //                         />
-    //                         <div>
-    //                         <div className="flex items-center gap-2 text-sm text-white mb-2">
-    //                             <span>{item.source}</span>
-    //                             <span>•</span>
-    //                             <span>{item.time}</span>
-    //                         </div>
-    //                         <h3 className="font-medium text-white hover:text-blue-400 cursor-pointer">
-    //                             {item.title}
-    //                         </h3>
-    //                         </div>
-    //                     </div>
-    //                     </CardContent>
-    //                 </Card>
-    //                 ))}
-    //             </div>
-    //         </div>
-
-
-    //         {/* About Section */}
-    //         <div className="mb-8 lg:mb-0">
-    //             <h2 className="text-xl font-bold mb-4">About</h2>
-    //             <Card className="bg-[#161b22] border-gray-700">
-    //                 <CardContent className="p-6">
-    //                 <p className="text-white">
-    //                     {stock.stock_name} is a company listed on the {stock.exchange}. It operates in the {stock.sector} sector, specifically in the {stock.industry} industry.
-    //                 </p>
-    //                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-    //                     <div>
-    //                     <p className="text-white mb-1">SECTOR</p>
-    //                     <p className="text-white">{stock.sector}</p>
-    //                     </div>
-    //                     <div>
-    //                     <p className="text-white mb-1">INDUSTRY</p>
-    //                     <p className="text-white">{stock.industry}</p>
-    //                     </div>
-    //                     <div>
-    //                     <p className="text-white mb-1">WEBSITE</p>
-    //                     <a
-    //                         href={stock.website_link}
-    //                         className="text-blue-400"
-    //                         target="_blank"
-    //                         rel="noopener noreferrer"
-    //                     >
-    //                         {stock.website_link}
-    //                     </a>
-    //                     </div>
-    //                     <div>
-    //                     <p className="text-white mb-1">VOLUME</p>
-    //                     <p className="text-white">{stock.volume}</p>
-    //                     </div>
-    //                 </div>
-    //                 </CardContent>
-    //             </Card>
-    //             </div>
-    //         </div>
-            
-
-    //       {/* Sidebar for Desktop */}
-    //     <div className="lg:col-span-1 lg:order-2 order-1 mb-8 lg:mb-0">
-    //         <Card className="bg-[#161b22] border-gray-700">
-    //         <CardContent className="p-6">
-    //             <div className="space-y-4">
-    //             {stats.map((stat, index) => (
-    //                 <div key={index} className="flex justify-between items-center">
-    //                 <span className="text-white text-sm">{stat.label}</span>
-    //                 <span className="text-white font-medium">{stat.value}</span>
-    //                 </div>
-    //             ))}
-    //             </div>
-    //         </CardContent>
-    //         </Card>
-    //     </div>
-
-    //     </div>
-    //   </div>
-    // </main>
 
     <main className="min-h-screen bg-[#0d1117] text-white">
   <div className="container mx-auto px-4 py-8">
@@ -289,10 +108,10 @@ export default function StockDetailPage() {
         <div className="mb-6">
           <div className="flex items-baseline gap-4 mb-4">
             <h2 className="text-4xl font-bold">₹{stock.price.toFixed(2)}</h2>
-            <div className={`flex items-center ${parseFloat(stock.chg_percentage) >= 0 ? 'text-[#3fb950]' : 'text-[#f85149]'}`}>
-              {parseFloat(stock.chg_percentage) >= 0 ? <ArrowUp className="h-4 w-4" /> : <ArrowDown className="h-4 w-4" />}
-              <span className="font-semibold">{Math.abs(parseFloat(stock.chg_percentage)).toFixed(2)}%</span>
-              <span className="text-[#c9d1d9] ml-2">{parseFloat(stock.chg_rs) >= 0 ? '+' : ''}{stock.chg_rs} Today</span>
+            <div className={`flex items-center ${(stock.chg_percentage) >= 0 ? 'text-[#3fb950]' : 'text-[#f85149]'}`}>
+              {(stock.chg_percentage) >= 0 ? <ArrowUp className="h-4 w-4" /> : <ArrowDown className="h-4 w-4" />}
+              <span className="font-semibold">{Math.abs((stock.chg_percentage)).toFixed(2)}%</span>
+              <span className="text-[#c9d1d9] ml-2">{(stock.chg_rs) >= 0 ? '+' : ''}{stock.chg_rs} Today</span>
             </div>
           </div>
           <p className="text-white">

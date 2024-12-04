@@ -17,8 +17,7 @@ interface StockCardProps {
 export function StockCard({ 
   name, 
   symbol, 
-  price, 
-  change, 
+  price,
   changePercent
 }: StockCardProps) {
   return (

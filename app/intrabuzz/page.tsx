@@ -26,16 +26,34 @@ export default function Nifty50Page() {
     loadStocks()
   }, [])
 
-  const applyFilter = (filter: "all" | "long" | "short") => {
-    setActiveFilter(filter)
-    if (filter === "all") {
-      setFilteredStocks(stocks)
-    } else if (filter === "long") {
-      setFilteredStocks([...stocks].sort((a, b) => b.chg_percentage - a.chg_percentage))
+  // const applyFilter = (filter: "all" | "long" | "short") => {
+  //  setActiveFilter(filter)
+  //  if (filter === "all") {
+  //    setFilteredStocks(stocks)
+  //  } else if (filter === "long") {
+  //    setFilteredStocks([...stocks].sort((a, b) => b.chg_percentage - a.chg_percentage))
+  //  } else {
+  //    setFilteredStocks([...stocks].sort((a, b) => a.chg_percentage - b.chg_percentage))
+  //  }
+  // }
+
+  const applyFilter = (filter: 'all' | 'long' | 'short') => {
+    setActiveFilter(filter);
+    
+    if (filter === 'all') {
+      setFilteredStocks(stocks);
+    } else if (filter === 'long') {
+      setFilteredStocks(
+        stocks.filter((stock) => (stock.chg_percentage) > 0)
+          .sort((a, b) => (b.chg_percentage) - (a.chg_percentage))
+      );
     } else {
-      setFilteredStocks([...stocks].sort((a, b) => a.chg_percentage - b.chg_percentage))
+      setFilteredStocks(
+        stocks.filter((stock) => (stock.chg_percentage) < 0)
+          .sort((a, b) => (a.chg_percentage) - (b.chg_percentage))
+      );
     }
-  }
+  };
 
   // const getBackgroundColor = (changePercent: number) => {
   //   const intensity = Math.min(Math.abs(changePercent) * 15, 100)

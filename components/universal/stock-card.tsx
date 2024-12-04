@@ -11,7 +11,6 @@ interface StockCardProps {
   name: string
   symbol: string
   price: number
-  change: number
   changePercent: number
 }
 

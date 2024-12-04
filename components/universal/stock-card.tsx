@@ -5,7 +5,6 @@ interface StockCardProps {
   name: string;
   symbol: string;
   price: number;
-  chg_rs: number;
   chg_percentage: number;
 }
 

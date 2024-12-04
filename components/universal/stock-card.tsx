@@ -5,11 +5,12 @@ interface StockCardProps {
   name: string;
   symbol: string;
   price: number;
+  chg_rs: number;
   chg_percentage: number;
 }
 
 
-export function StockCard({ name, symbol, price, chg_percentage }: StockCardProps) {
+export function StockCard({ name, symbol, chg_rs, price, chg_percentage }: StockCardProps) {
   return (
     <Card className="bg-transparent shadow-none border-none h-full">
       <CardContent className="p-3 h-full flex flex-col justify-between">
@@ -20,11 +21,11 @@ export function StockCard({ name, symbol, price, chg_percentage }: StockCardProp
         <div className="mt-2">
           <p className="text-md font-bold text-white">₹{price.toFixed(2)}</p>
           <p className={`inline-flex items-center px-2 py-1 rounded-xl text-sm font-bold ${
-            changePercent >= 0 
+            chg_rs >= 0 
               ? 'bg-green-50 text-green-600' 
               : 'bg-red-50 text-red-600'
           }`}>
-            {changePercent >= 0 ? (
+            {chg_rs >= 0 ? (
               <ArrowUpIcon className="mr-1 h-3 w-3" />
             ) : (
               <ArrowDownIcon className="mr-1 h-3 w-3" />

@@ -9,7 +9,7 @@ interface StockCardProps {
 }
 
 
-export function StockCard({ name, symbol, price, chg_rs, chg_percentage }: StockCardProps) {
+export function StockCard({ name, symbol, price, chg_percentage }: StockCardProps) {
   return (
     <Card className="bg-transparent shadow-none border-none h-full">
       <CardContent className="p-3 h-full flex flex-col justify-between">

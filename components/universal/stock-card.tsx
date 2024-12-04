@@ -46,7 +46,7 @@ export function StockCard({ name, symbol, chg_rs, price, chg_percentage }: Stock
               <ArrowDownIcon className="mr-1 h-3 w-3" />
             )}
             <span className="truncate">
-              {Math.abs(changePercent).toFixed(2)}%
+              {Math.abs(chg_percentage).toFixed(2)}%
             </span>
           </div>
         </div>

@@ -77,7 +77,7 @@ export default function Nifty50Page() {
             onClick={() => applyFilter(filter as "all" | "long" | "short")}
             className={`px-2 py-2 rounded-md font-medium ${
               activeFilter === filter
-                ? "bg-gray-900 text-white border border-gray-200"
+                ? "bg-gray-700 text-white border border-gray-200"
                 : "bg-gray-900 text-gray-200 border border-gray-700"
             }`}
           >

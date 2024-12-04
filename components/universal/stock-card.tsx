@@ -9,13 +9,21 @@ interface StockCardProps {
   chg_percentage: number;
 }
 
+const getRandomColor = (seed: string) => {
+  const hash = seed.split('').reduce((acc, char) => char.charCodeAt(0) + ((acc << 5) - acc), 0);
+  const hue = hash % 360;
+  return `hsl(${hue}, 70%, 30%)`; // Darker color with 30% lightness
+};
 
 export function StockCard({ name, symbol, chg_rs, price, chg_percentage }: StockCardProps) {
   return (
     <Card className="bg-transparent shadow-none border-none h-full">
       <CardContent className="p-3 h-full flex flex-col justify-between">
         <div>
-          <h3 className="text-md font-medium text-white truncate">{symbol}</h3>
+          <h3 className="text-md font-medium text-white truncate"
+            style={{ backgroundColor: getRandomColor(symbol) }}
+            >{symbol}</h3>
+          <p className="text-lg text-white truncate">{name}</p>
           <p className="text-lg text-gray-300 truncate">{name}</p>
         </div>
         <div className="mt-2">

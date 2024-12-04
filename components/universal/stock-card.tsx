@@ -24,7 +24,7 @@ export function StockCard({ name, symbol, price, chg_rs, chg_percentage }: Stock
           <div className="self-start inline-block px-3 py-1 rounded-md text-sm font-medium text-white mb-2" style={{ backgroundColor: getRandomColor(symbol) }}>
             {symbol}
           </div>
-          <h3 className="text-lg font-semibold text-gray-900 line-clamp-2 min-h-[3.5rem]">{name}</h3>
+          <h3 className="text-lg font-semibold text-black line-clamp-2 min-h-[3.5rem]">{name}</h3>
         </div>
 
         {/* Price and Change Section */}

@@ -1,5 +1,13 @@
 import { Card, CardContent } from "@/components/ui/card"
-import { ArrowUpIcon, ArrowDownIcon } from 'lucide-react'
+import { ArrowUpIcon, ArrowDownIcon } from "lucide-react"
+
+interface StockCardProps {
+  name: string;
+  symbol: string;
+  price: number;
+  chg_rs: number;
+  chg_percentage: number;
+}
 
 const getRandomColor = (seed: string) => {
   const hash = seed.split('').reduce((acc, char) => char.charCodeAt(0) + ((acc << 5) - acc), 0);
@@ -7,19 +15,7 @@ const getRandomColor = (seed: string) => {
   return `hsl(${hue}, 70%, 30%)`; // Darker color with 30% lightness
 };
 
-interface StockCardProps {
-  name: string
-  symbol: string
-  price: number
-  changePercent: number
-}
-
-export function StockCard({ 
-  name, 
-  symbol, 
-  price,
-  changePercent
-}: StockCardProps) {
+export function StockCard({ name, symbol, price, chg_rs, chg_percentage }: StockCardProps) {
   return (
     <Card className="bg-white shadow-sm border-none h-[200px]">
       <CardContent className="p-4 h-full flex flex-col justify-between">
@@ -40,17 +36,17 @@ export function StockCard({
             }
           </p>
           <div className={`inline-flex items-center px-2 py-1 rounded-xl text-sm font-bold ${
-            changePercent >= 0 
+            chg_rs >= 0 
               ? 'bg-green-50 text-green-600' 
               : 'bg-red-50 text-red-600'
           }`}>
-            {changePercent >= 0 ? (
+            {chg_rs >= 0 ? (
               <ArrowUpIcon className="mr-1 h-3 w-3" />
             ) : (
               <ArrowDownIcon className="mr-1 h-3 w-3" />
             )}
             <span className="truncate">
-              {Math.abs(changePercent).toFixed(2)}%
+              {Math.abs(chg_percentage).toFixed(2)}%
             </span>
           </div>
         </div>
@@ -58,4 +54,3 @@ export function StockCard({
     </Card>
   )
 }
-

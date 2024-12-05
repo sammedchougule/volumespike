@@ -1,118 +1,185 @@
 'use client'
 
-import { useState, useEffect } from "react"
-import { StockCard } from "@/components/universal/stock-card"
-import { Button } from "@/components/ui/button"
-import { fetchStockData } from "@/utils/fetchStockData"
-import { Stock } from "@/types/stock"
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
+import { ChevronDown, LayoutGrid, Table } from 'lucide-react'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { StockCard } from '@/components/universal/stock-card'
+import { fetchStockData } from '@/utils/fetchStockData'
+import { Stock } from '@/types/stock'
 
-export default function Nifty50Page() {
+export default function ItrabuzzPage() {
   const [stocks, setStocks] = useState<Stock[]>([])
   const [filteredStocks, setFilteredStocks] = useState<Stock[]>([])
-  const [activeFilter, setActiveFilter] = useState<"all" | "long" | "short">("all")
-  const [loading, setLoading] = useState<boolean>(true)
+  const [sectors, setSectors] = useState<string[]>([])
+  const [selectedSector, setSelectedSector] = useState<string | null>(null)
+  const [sortBy, setSortBy] = useState<string | null>(null)
+  const [isTableView, setIsTableView] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     async function loadStocks() {
       try {
-        setLoading(true)
         const data = await fetchStockData()
         setStocks(data)
         setFilteredStocks(data)
+        const uniqueSectors = Array.from(new Set(data.map(stock => stock.sector)))
+        setSectors(['All', ...uniqueSectors])
+        setIsLoading(false)
       } catch (err) {
-        console.error("Error fetching stocks:", err)
-      } finally {
-        setLoading(false)
+        console.error('Error fetching stocks:', err)
+        setError('Failed to load stocks. Please try again later.')
+        setIsLoading(false)
       }
     }
     loadStocks()
   }, [])
 
-  const applyFilter = (filter: 'all' | 'long' | 'short') => {
-    setActiveFilter(filter);
-    if (filter === 'all') {
-      setFilteredStocks(stocks);
-    } else if (filter === 'long') {
-      setFilteredStocks(
-        stocks.filter((stock) => stock.chg_percentage > 0)
-          .sort((a, b) => b.chg_percentage - a.chg_percentage)
-      );
-    } else {
-      setFilteredStocks(
-        stocks.filter((stock) => stock.chg_percentage < 0)
-          .sort((a, b) => a.chg_percentage - b.chg_percentage)
-      );
-    }
-  };
+  useEffect(() => {
+    filterAndSortStocks()
+  }, [selectedSector, sortBy])
 
-  const getBackgroundColor = (changePercent: number) => {
-    const maxPercent = 10;
-    const clampedPercent = Math.max(-maxPercent, Math.min(changePercent, maxPercent));
-    if (clampedPercent === 0) return `rgba(255, 215, 0, 1)`;
-
-    const intensity = Math.abs(clampedPercent) / maxPercent;
-    if (clampedPercent > 0) {
-      const red = Math.round(255 - 255 * intensity);
-      const green = Math.round(215 + (128 - 215) * intensity);
-      const blue = Math.round(0);
-      return `rgba(${red}, ${green}, ${blue}, 1)`;
-    } else {
-      const red = Math.round(255 - (255 - 178) * intensity);
-      const green = Math.round(215 - 215 * intensity);
-      const blue = Math.round(0 + 34 * intensity);
-      return `rgba(${red}, ${green}, ${blue}, 1)`;
+  const filterAndSortStocks = () => {
+    let result = [...stocks]
+    
+    if (selectedSector && selectedSector !== 'All') {
+      result = result.filter(stock => stock.sector === selectedSector)
     }
-  };
+
+    switch (sortBy) {
+      case 'alphabetical':
+        result.sort((a, b) => a.stock_name.localeCompare(b.stock_name))
+        break
+      case 'percentageInc':
+        result.sort((a, b) => parseFloat(b.chg_percentage) - parseFloat(a.chg_percentage))
+        break
+      case 'percentageDec':
+        result.sort((a, b) => parseFloat(a.chg_percentage) - parseFloat(b.chg_percentage))
+        break
+      case 'volumeSpike':
+        result.sort((a, b) => {
+          const spikeA = parseFloat(a.volume_spike.replace('▲', '').replace('%', ''))
+          const spikeB = parseFloat(b.volume_spike.replace('▲', '').replace('%', ''))
+          return spikeB - spikeA
+        })
+        break
+    }
+
+    setFilteredStocks(result)
+  }
+
+  if (isLoading) return <div className="text-white text-center py-8">Loading stocks...</div>
+  if (error) return <div className="text-red-500 text-center py-8">{error}</div>
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6 text-white">
-        {loading ? <div className="skeleton h-8 w-48"></div> : "Nifty 50 Stocks"}
-      </h1>
+    <main className="min-h-screen overflow-x-hidden">
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold text-white mb-6">Itrabuzz</h1>
+        <p className="mt-4 text-gray-300 mb-6">Latest market buzz and trending stories.</p>
+        
+        <div className="flex flex-wrap gap-4 mb-6">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline">
+                Filter by <ChevronDown className="ml-2 h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              {sectors.map((sector) => (
+                <DropdownMenuItem key={sector} onSelect={() => setSelectedSector(sector)}>
+                  {sector}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
 
-      <div className="mb-6 flex space-x-4">
-        {["all", "long", "short"].map((filter) => (
-          <Button
-            key={filter}
-            onClick={() => applyFilter(filter as "all" | "long" | "short")}
-            className={`px-2 py-2 rounded-md font-medium ${
-              activeFilter === filter
-                ? "bg-gray-700 text-white border border-gray-200"
-                : "bg-gray-900 text-gray-200 border border-gray-700"
-            }`}
-          >
-            {loading ? <div className="skeleton h-6 w-24"></div> : filter === "all" ? "All Stocks" : filter === "long" ? "Long Build Up" : "Short Build Up"}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline">
+                Sort by <ChevronDown className="ml-2 h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem onSelect={() => setSortBy('alphabetical')}>Alphabetical</DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => setSortBy('percentageInc')}>% Change (High to Low)</DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => setSortBy('percentageDec')}>% Change (Low to High)</DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => setSortBy('volumeSpike')}>Volume Spike</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <Button variant="outline" onClick={() => setIsTableView(!isTableView)}>
+            {isTableView ? <LayoutGrid className="h-4 w-4" /> : <Table className="h-4 w-4" />}
           </Button>
-        ))}
-      </div>
+        </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-        {loading
-          ? Array.from({ length: 12 }).map((_, index) => (
-              <div
-                key={index}
-                className="rounded-lg p-4 bg-gray-700 skeleton"
-              >
-                <div className="skeleton h-6 w-full mb-2"></div>
-                <div className="skeleton h-4 w-2/3"></div>
-              </div>
-            ))
-          : filteredStocks.map((stock) => (
-              <div
-                key={stock.symbol}
-                style={{ backgroundColor: getBackgroundColor(stock.chg_percentage) }}
-                className="rounded-lg transition-colors"
-              >
+        {isTableView ? (
+          <div className="overflow-x-auto relative">
+            <table className="w-full text-sm text-left text-gray-300">
+              <thead className="text-xs uppercase bg-gray-700 text-gray-300">
+                <tr>
+                  <th className="px-3 py-2 sticky left-0 z-10 bg-gray-700">Symbol</th>
+                  <th className="px-3 py-2">Name</th>
+                  <th className="px-3 py-2">Price</th>
+                  <th className="px-3 py-2">Change %</th>
+                  <th className="px-3 py-2">Volume Spike</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredStocks.map((stock) => (
+                  <tr key={stock.symbol} className="border-b border-gray-700">
+                    <td className="px-3 py-2 font-medium whitespace-nowrap sticky left-0 z-10 bg-gray-800">{stock.symbol}</td>
+                    <td className="px-3 py-2">{stock.stock_name}</td>
+                    <td className="px-3 py-2">₹{stock.price.toFixed(2)}</td>
+                    <td className={`px-3 py-2 ${parseFloat(stock.chg_percentage) >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                      {stock.chg_percentage}%
+                    </td>
+                    <td className="px-3 py-2">{stock.volume_spike}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+            {filteredStocks.map((stock) => (
+              <Link href={`/stockdetail/${stock.symbol}`} key={stock.symbol}>
                 <StockCard
-                  name={stock.name}
+                  name={stock.stock_name}
                   symbol={stock.symbol}
                   price={stock.price}
-                  chg_rs={stock.chg_rs}
-                  chg_percentage={stock.chg_percentage}
+                  change={parseFloat(stock.chg_rs)}
+                  changePercent={parseFloat(stock.chg_percentage)}
                 />
-              </div>
+              </Link>
             ))}
+          </div>
+        )}
+
+        <div className="mt-8">
+          <h2 className="text-2xl font-semibold text-white mb-4">Featured Indices</h2>
+          <ul className="space-y-2">
+            <li>
+              <Link href="/itrabuzz/nifty50" className="text-blue-400 hover:text-blue-300">
+                Nifty 50 Stocks
+              </Link>
+            </li>
+            <li>
+              <Link href="/heatmap" className="text-blue-400 hover:text-blue-300">
+                Stock Heatmap
+              </Link>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
+    </main>
   )
 }
+

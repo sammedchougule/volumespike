@@ -5,12 +5,6 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { ChevronDown, LayoutGrid, Table } from 'lucide-react'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import { StockCard } from '@/components/universal/stock-card'
 import { fetchStockData } from '@/utils/fetchStockData'
 import { Stock } from '@/types/stock'
@@ -86,34 +80,7 @@ export default function ItrabuzzPage() {
         <p className="mt-4 text-gray-300 mb-6">Latest market buzz and trending stories.</p>
         
         <div className="flex flex-wrap gap-4 mb-6">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline">
-                Filter by <ChevronDown className="ml-2 h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              {sectors.map((sector) => (
-                <DropdownMenuItem key={sector} onSelect={() => setSelectedSector(sector)}>
-                  {sector}
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline">
-                Sort by <ChevronDown className="ml-2 h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem onSelect={() => setSortBy('alphabetical')}>Alphabetical</DropdownMenuItem>
-              <DropdownMenuItem onSelect={() => setSortBy('percentageInc')}>% Change (High to Low)</DropdownMenuItem>
-              <DropdownMenuItem onSelect={() => setSortBy('percentageDec')}>% Change (Low to High)</DropdownMenuItem>
-              <DropdownMenuItem onSelect={() => setSortBy('volumeSpike')}>Volume Spike</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          
 
           <Button variant="outline" onClick={() => setIsTableView(!isTableView)}>
             {isTableView ? <LayoutGrid className="h-4 w-4" /> : <Table className="h-4 w-4" />}

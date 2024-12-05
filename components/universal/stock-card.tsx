@@ -17,14 +17,14 @@ const getRandomColor = (seed: string) => {
 
 export function StockCard({ name, symbol, chg_rs, price, chg_percentage }: StockCardProps) {
   return (
-    <Card className="bg-transparent shadow-md border-none h-[250px]">
+    <Card className="bg-transparent shadow-md border-none h-full">
       <CardContent className="p-3 h-full flex flex-col justify-between">
         {/* Symbol and Name Section */}
         <div>
           <div className="self-start inline-block px-3 py-1 rounded-md text-sm font-medium text-white mb-2" style={{ backgroundColor: getRandomColor(symbol) }}>
             {symbol}
           </div>
-          <h3 className="text-lg font-semibold text-gray-900 line-clamp-2 min-h-[3.5rem]">{name}</h3>
+          <h3 className="text-lg font-semibold text-gray-900 line-clamp-2 ">{name}</h3>
         </div>
         
         {/* Price and Change Section */}

@@ -17,7 +17,7 @@ const getRandomColor = (seed: string) => {
 
 export function StockCard({ name, symbol, chg_rs, price, chg_percentage }: StockCardProps) {
   return (
-    <Card className="bg-transparent shadow-none border-none h-full">
+    <Card className="bg-transparent shadow-md border-none h-[250px]">
       <CardContent className="p-3 h-full flex flex-col justify-between">
         {/* Symbol and Name Section */}
         <div>

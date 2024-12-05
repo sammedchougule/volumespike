@@ -15,41 +15,25 @@ const getRandomColor = (seed: string) => {
   return `hsl(${hue}, 70%, 30%)`; // Darker color with 30% lightness
 };
 
-export function StockCard({ name, symbol, chg_rs, price, chg_percentage }: StockCardProps) {
+
+export function StockCard({ name, symbol, price, chg_rs, chg_percentage }: StockCardProps) {
   return (
-    <Card className="bg-transparent shadow-md border-none h-full">
+    <Card className="bg-transparent shadow-none border-none h-full">
       <CardContent className="p-3 h-full flex flex-col justify-between">
-        {/* Symbol and Name Section */}
         <div>
-          <div className="self-start inline-block px-3 py-1 rounded-md text-sm font-medium text-white mb-2" style={{ backgroundColor: getRandomColor(symbol) }}>
-            {symbol}
-          </div>
-          <h3 className="text-lg font-semibold text-gray-900 line-clamp-2 ">{name}</h3>
-           <p className="text-lg font-semibold  text-gray-800 truncate">{name}</p>
+          <h3 className="text-md font-medium text-white truncate" style={{ backgroundColor: getRandomColor(symbol) }}>{symbol}</h3>
+          <p className="text-lg text-gray-300 truncate">{name}</p>
         </div>
-        
-        {/* Price and Change Section */}
-        <div>
-          <p className="text-2xl font-bold text-gray-900 mb-2 truncate">
-            {price >= 1000 ? 
-              `₹${price.toLocaleString('en-IN')}` : 
-              `₹${price.toFixed(2)}`
-            }
-          </p>
-          <div className={`inline-flex items-center px-2 py-1 rounded-xl text-sm font-bold ${
-            chg_rs >= 0 
-              ? 'bg-green-50 text-green-600' 
-              : 'bg-red-50 text-red-600'
-          }`}>
+        <div className="mt-2">
+          <p className="text-md font-bold text-white">₹{price.toFixed(2)}</p>
+          <p className={`text-base flex items-center justify-end ${chg_rs >= 0 ? "text-green-300" : "text-red-300"}`}>
             {chg_rs >= 0 ? (
-              <ArrowUpIcon className="mr-1 h-3 w-3" />
+              <ArrowUpIcon className="mr-1 h-4 w-4" />
             ) : (
-              <ArrowDownIcon className="mr-1 h-3 w-3" />
+              <ArrowDownIcon className="mr-1 h-4 w-4" />
             )}
-            <span className="truncate">
-              {Math.abs(chg_percentage).toFixed(2)}%
-            </span>
-          </div>
+            {chg_percentage}%
+          </p>
         </div>
       </CardContent>
     </Card>

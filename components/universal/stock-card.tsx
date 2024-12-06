@@ -9,6 +9,12 @@ interface StockCardProps {
   chg_percentage: number;
 }
 
+const getRandomColor = (seed: string) => {
+  const hash = seed.split('').reduce((acc, char) => char.charCodeAt(0) + ((acc << 5) - acc), 0);
+  const hue = hash % 360;
+  return `hsl(${hue}, 70%, 30%)`; // Darker color with 30% lightness
+};
+
 
 const getRandomColor = (seed: string) => {
   const hash = seed.split('').reduce((acc, char) => char.charCodeAt(0) + ((acc << 5) - acc), 0);
@@ -21,7 +27,7 @@ export function StockCard({ name, symbol, price, chg_rs, chg_percentage }: Stock
     <Card className="bg-transparent shadow-none border-none h-full">
       <CardContent className="p-3 h-full flex flex-col justify-between">
         <div>
-          <h3 className="self-start inline-block px-3 py-1 rounded-md text-sm font-medium text-white mb-2" style={{ backgroundColor: getRandomColor(symbol) }}>{symbol}</h3>
+          <h3 className="text-md font-medium text-white truncate">{symbol}</h3>
           <p className="text-lg text-gray-300 truncate">{name}</p>
         </div>
         <div className="mt-2">

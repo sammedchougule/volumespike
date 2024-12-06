@@ -282,7 +282,7 @@ export default function Nifty50Page() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline">
-              Filter by Sector <ChevronDown className="ml-2 h-4 w-4" />
+              {selectedSector ? selectedSector : "Filter by Sector"} <ChevronDown className="ml-2 h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
@@ -298,22 +298,22 @@ export default function Nifty50Page() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline">
-              Sort by <ChevronDown className="ml-2 h-4 w-4" />
+              {sortBy ? sortBy : "Sort by"} <ChevronDown className="ml-2 h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem onSelect={() => setSortBy("alphabetical")}>
-              Alphabetical
+            <DropdownMenuItem onSelect={() => setSortBy("Alphabetical")}>
+              A - B
             </DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => setSortBy("percentageInc")}>
-              % Change (High to Low)
+            <DropdownMenuItem onSelect={() => setSortBy("% Change (High to Low)")}>
+              % High to Low
             </DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => setSortBy("percentageDec")}>
-              % Change (Low to High)
+            <DropdownMenuItem onSelect={() => setSortBy("% Change (Low to High)")}>
+              % Low to High
             </DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => setSortBy("volumeSpike")}>
+            {/* <DropdownMenuItem onSelect={() => setSortBy("Volume Spike")}>
               Volume Spike
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
           </DropdownMenuContent>
         </DropdownMenu>
 

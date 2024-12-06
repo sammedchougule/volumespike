@@ -38,12 +38,6 @@ const newsEvents: NewsEvent[] = [
     time: '30 MINUTES AGO',
     type: 'MACRO',
     isUrgent: true
-  },
-  {
-    title: 'Tech Giant ABC declares quarterly dividend',
-    time: '3 HOURS AGO',
-    type: 'DIVIDENDS',
-    tag: 'ABCTECH'
   }
 ]
 

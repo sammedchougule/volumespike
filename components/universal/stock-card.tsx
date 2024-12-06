@@ -30,7 +30,7 @@ export function StockCard({ stock_name, symbol, price, chg_percentage }: StockCa
 
         {/* Price and Change Section */}
         <div>
-          <p className="text-2xl font-bold text-gray-900 mb-2 truncate">
+          <p className="text-xl font-bold text-gray-900 mb-2 truncate">
             {price >= 1000 ? 
               `₹${price.toLocaleString('en-IN')}` : 
               `₹${price.toFixed(2)}`

@@ -1,6 +1,5 @@
 export interface Stock {
     symbol: string
-    name: string
     price: number
     chg_rs: number
     chg_percentage: number
@@ -19,7 +18,7 @@ export interface Stock {
     high: number;
     volume: number;
     avg_volume: number;
-    volume_spike: number;
+    volume_spike: string;
     month_high: number;
     month_low: number;
     month_hl_cross: string;

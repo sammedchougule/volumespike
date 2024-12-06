@@ -110,7 +110,7 @@ export default function HeatmapPage() {
                 className="rounded-lg transition-colors"
               >
                 <StockCard 
-                  name={stock.name}
+                  stock_name={stock.stock_name}
                   symbol={stock.symbol}
                   price={stock.price}
                   chg_rs={stock.chg_rs}

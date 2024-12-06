@@ -37,7 +37,7 @@ export function StockTile({ stock, size = 'md' }: StockTileProps) {
           {stock.logo && (
             <img
               src={stock.logo}
-              alt={stock.name}
+              alt={stock.stock_name}
               className="w-8 h-8 rounded-full bg-white p-1"
             />
           )}

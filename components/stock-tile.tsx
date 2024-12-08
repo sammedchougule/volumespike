@@ -29,7 +29,7 @@ export function StockTile({ stock, size = 'md' }: StockTileProps) {
   return (
     <div
       className={`${getSizeClasses()} p-3 rounded-lg transition-colors relative`}
-      style={{ backgroundColor: getBackgroundColor(stock.chg_percentage) }}
+      style={{ backgroundColor: getBackgroundColor(stock.changepct) }}
     >
       <div className="h-full flex flex-col justify-between text-white">
         <div>
@@ -37,14 +37,14 @@ export function StockTile({ stock, size = 'md' }: StockTileProps) {
           {stock.logo && (
             <img
               src={stock.logo}
-              alt={stock.stock_name}
+              alt={stock.companyname}
               className="w-8 h-8 rounded-full bg-white p-1"
             />
           )}
         </div>
         <div className="text-xl font-bold">
-          {stock.chg_percentage >= 0 ? '+' : ''}
-          {stock.chg_percentage.toFixed(2)}%
+          {stock.changepct >= 0 ? '+' : ''}
+          {stock.changepct.toFixed(2)}%
         </div>
       </div>
     </div>

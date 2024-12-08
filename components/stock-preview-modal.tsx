@@ -21,7 +21,7 @@ export function StockPreviewModal({ stock, isOpen, onClose }: StockPreviewModalP
       <Content>
         <Header>
           <div className="flex justify-between items-start w-full">
-            <Title>{stock.stock_name}</Title>
+            <Title>{stock.companyname}</Title>
             <Close onClick={onClose} />
 
              <Link href={`/stockdetail/${stock.symbol}`}>
@@ -46,13 +46,13 @@ export function StockPreviewModal({ stock, isOpen, onClose }: StockPreviewModalP
           {/* Price and Change */}
           <div className="flex items-baseline gap-3">
             <span className="text-2xl font-bold">₹{stock.price.toFixed(2)}</span>
-            <div className={`flex items-center ${(stock.chg_percentage) >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-              {(stock.chg_percentage) >= 0 ? (
+            <div className={`flex items-center ${(stock.changepct) >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+              {(stock.changepct) >= 0 ? (
                 <ArrowUpIcon className="h-4 w-4 mr-1" />
               ) : (
                 <ArrowDownIcon className="h-4 w-4 mr-1" />
               )}
-              <span>{Math.abs((stock.chg_percentage)).toFixed(2)}%</span>
+              <span>{Math.abs((stock.changepct)).toFixed(2)}%</span>
             </div>
           </div>
 
@@ -64,7 +64,7 @@ export function StockPreviewModal({ stock, isOpen, onClose }: StockPreviewModalP
             </div>
             <div>
               <p className="text-sm text-gray-400">52W Range</p>
-              <p className="text-sm">₹{stock.year_low} - ₹{stock.year_high}</p>
+              <p className="text-sm">₹{stock.low52} - ₹{stock.high52}</p>
             </div>
             <div>
               <p className="text-sm text-gray-400">Market Cap</p>
@@ -80,7 +80,7 @@ export function StockPreviewModal({ stock, isOpen, onClose }: StockPreviewModalP
           <div>
             <p className="text-sm text-gray-400 mb-1">About</p>
             <p className="text-sm">
-              {stock.stock_name} is a {stock.industry} company listed on {stock.exchange}, operating in the {stock.sector} sector.
+              {stock.companyname} is a {stock.industry} company listed on {stock.exchange}, operating in the {stock.sector} sector.
             </p>
           </div>
         </div>

@@ -67,11 +67,11 @@ export default function StockDetailPage() {
   if (!stock) return <div className="text-white text-center py-8">No stock data available</div>
 
   const stats = [
-    { label: 'PREVIOUS CLOSE', value: `₹${stock.close_yest}` },
+    { label: 'PREVIOUS CLOSE', value: `₹${stock.closeyest}` },
     { label: 'DAY RANGE', value: `₹${stock.low} - ₹${stock.high}` },
-    { label: 'YEAR RANGE', value: `₹${stock.year_low} - ₹${stock.year_high}` },
+    { label: 'YEAR RANGE', value: `₹${stock.low52} - ₹${stock.high52}` },
     { label: 'MARKET CAP', value: `${stock.marketcap} INR` },
-    { label: 'AVG VOLUME', value: stock.avg_volume },
+    { label: 'AVG VOLUME', value: stock.volumeavg },
     { label: 'P/E RATIO', value: stock.eps ? (stock.price / stock.eps).toFixed(2) : 'N/A' },
     { label: 'DIVIDEND YIELD', value: 'N/A' }, 
     { label: 'PRIMARY EXCHANGE', value: stock.exchange },
@@ -84,7 +84,7 @@ export default function StockDetailPage() {
     {/* Header */}
     <div className="flex justify-between items-start mb-6">
       <div>
-        <h1 className="text-2xl font-bold mb-2">{stock.stock_name}</h1>
+        <h1 className="text-2xl font-bold mb-2">{stock.companyname}</h1>
         <div className="flex items-center gap-2">
           <span className="px-3 py-1 bg-gray-800 rounded-full text-sm">Stock</span>
           <span className="px-3 py-1 bg-gray-800 rounded-full text-sm">{stock.exchange}</span>
@@ -109,10 +109,10 @@ export default function StockDetailPage() {
         <div className="mb-6">
           <div className="flex items-baseline gap-4 mb-4">
             <h2 className="text-4xl font-bold">₹{stock.price.toFixed(2)}</h2>
-            <div className={`flex items-center ${(stock.chg_percentage) >= 0 ? 'text-[#3fb950]' : 'text-[#f85149]'}`}>
-              {(stock.chg_percentage) >= 0 ? <ArrowUp className="h-4 w-4" /> : <ArrowDown className="h-4 w-4" />}
-              <span className="font-semibold">{Math.abs((stock.chg_percentage)).toFixed(2)}%</span>
-              <span className="text-[#c9d1d9] ml-2">{(stock.chg_rs) >= 0 ? '+' : ''}{stock.chg_rs} Today</span>
+            <div className={`flex items-center ${(stock.changepct) >= 0 ? 'text-[#3fb950]' : 'text-[#f85149]'}`}>
+              {(stock.changepct) >= 0 ? <ArrowUp className="h-4 w-4" /> : <ArrowDown className="h-4 w-4" />}
+              <span className="font-semibold">{Math.abs((stock.changepct)).toFixed(2)}%</span>
+              <span className="text-[#c9d1d9] ml-2">{(stock.change) >= 0 ? '+' : ''}{stock.change} Today</span>
             </div>
           </div>
           <p className="text-white">
@@ -133,17 +133,17 @@ export default function StockDetailPage() {
                   <CardContent className="p-3 flex flex-col justify-between h-full">
                     <div>
                       <h3 className="font-bold text-white text-sm mb-1 truncate">{relatedStock.symbol}</h3>
-                      <p className="text-xs text-gray-400 truncate">{relatedStock.stock_name}</p>
+                      <p className="text-xs text-gray-400 truncate">{relatedStock.companyname}</p>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-white text-sm">₹{relatedStock.price.toFixed(2)}</span>
                       <span
                         className={`text-xs ${
-                          (relatedStock.chg_percentage) >= 0 ? 'text-[#3fb950]' : 'text-[#f85149]'
+                          (relatedStock.changepct) >= 0 ? 'text-[#3fb950]' : 'text-[#f85149]'
                         }`}
                       >
-                        {(relatedStock.chg_percentage) >= 0 ? '+' : ''}
-                        {relatedStock.chg_percentage}%
+                        {(relatedStock.changepct) >= 0 ? '+' : ''}
+                        {relatedStock.changepct}%
                       </span>
                     </div>
                   </CardContent>
@@ -206,7 +206,7 @@ export default function StockDetailPage() {
         <Card className="bg-[#161b22] border-gray-700">
           <CardContent className="p-6">
             <p className="text-white">
-              {stock.stock_name} is a company listed on the {stock.exchange}. It operates in the {stock.sector} sector, specifically in the {stock.industry} industry.
+              {stock.companyname} is a company listed on the {stock.exchange}. It operates in the {stock.sector} sector, specifically in the {stock.industry} industry.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
               <div>
@@ -216,17 +216,6 @@ export default function StockDetailPage() {
               <div>
                 <p className="text-white mb-1">INDUSTRY</p>
                 <p className="text-white">{stock.industry}</p>
-              </div>
-              <div>
-                <p className="text-white mb-1">WEBSITE</p>
-                <a
-                  href={stock.website_link}
-                  className="text-blue-400"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {stock.website_link}
-                </a>
               </div>
               <div>
                 <p className="text-white mb-1">VOLUME</p>

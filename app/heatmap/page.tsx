@@ -106,13 +106,13 @@ export default function HeatmapPage() {
             <Link href={`/stockdetail/${stock.symbol}`} key={stock.symbol}>
               <div
                 key={stock.symbol}
-                style={{ backgroundColor: getBackgroundColor(stock.chg_percentage) }}
+                style={{ backgroundColor: getBackgroundColor(stock.changepct) }}
                 className="rounded-lg transition-all duration-300 hover:scale-105 cursor-pointer"              >
                 <StockCard 
-                  stock_name={stock.stock_name}
+                  companyname={stock.companyname}
                   symbol={stock.symbol}
                   price={stock.price}
-                  chg_percentage={stock.chg_percentage}
+                  changepct={stock.changepct}
                 />
               </div>
             </Link>

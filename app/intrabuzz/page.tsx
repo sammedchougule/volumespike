@@ -26,7 +26,6 @@ export default function Nifty50Page() {
   const [error, setError] = useState<string | null>(null)
   const [sectors, setSectors] = useState<string[]>([])
 
-  const [volumeSpikeOrder, setVolumeSpikeOrder] = useState<"asc" | "desc" | null>(null)
 
   
   useEffect(() => {
@@ -50,11 +49,7 @@ export default function Nifty50Page() {
     loadStocks()
   }, [])
 
-  useEffect(() => {
-    filterAndSortStocks()
-  }, [selectedSector, sortBy, volumeSpikeOrder])
 
-  
   const filterAndSortStocks = () => {
     let result = [...stocks];
   
@@ -78,15 +73,6 @@ export default function Nifty50Page() {
       }
     }
 
-
-    // Sort by Volume Spike Order
-    if (volumeSpikeOrder) {
-      result.sort((a, b) => {
-        const spikeA = a.volumespike;
-        const spikeB = b.volumespike;
-        return volumeSpikeOrder === "asc" ? spikeA - spikeB : spikeB - spikeA;
-      });
-    }
 
     setFilteredStocks(result);
   };

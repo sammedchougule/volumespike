@@ -27,27 +27,27 @@ export default function Nifty50Page() {
   const [sectors, setSectors] = useState<string[]>([])
 
 
-  
   useEffect(() => {
     async function loadStocks() {
       try {
-        setLoading(true)
-        const data = await fetchStockData()
-        setStocks(data)
-        setFilteredStocks(data)
+        setLoading(true);
+        const data = await fetchStockData();
+        setStocks(data);
         const uniqueSectors: string[] = Array.from(
           new Set(data.map((stock: Stock) => stock.sector))
-        )
-        setSectors(["All", ...uniqueSectors])
+        );
+        setSectors(["All", ...uniqueSectors]);
       } catch (err) {
-        console.error("Error fetching stocks:", err)
-        setError("Failed to load stocks. Please try again later.")
+        console.error("Error fetching stocks:", err);
+        setError("Failed to load stocks. Please try again later.");
       } finally {
-        setLoading(false)
+        setLoading(false);
+        filterAndSortStocks(); // Call this after fetching data
       }
     }
-    loadStocks()
-  }, [])
+    loadStocks();
+  }, []);
+  
 
 
   

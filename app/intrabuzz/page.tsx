@@ -50,6 +50,7 @@ export default function Nifty50Page() {
   }, [])
 
 
+  
   const filterAndSortStocks = () => {
     let result = [...stocks];
   

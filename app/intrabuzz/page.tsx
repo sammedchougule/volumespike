@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { StockCard } from "@/components/universal/stock-card"
 import { Button } from "@/components/ui/button"
-import { ChevronDown, LayoutGrid, Table, Flame } from "lucide-react"
+import { ChevronDown, LayoutGrid, Table } from "lucide-react"
 import { fetchStockData } from "@/utils/fetchStockData"
 import { Stock } from "@/types/stock"
 import Skeleton from "@/components/ui/skeleton"
@@ -94,9 +94,6 @@ export default function Nifty50Page() {
 
   const toggleView = () => setIsTableView(!isTableView)
 
-  const toggleVolumeSpikeOrder = () => {
-    setVolumeSpikeOrder((prev) => (prev === "asc" ? "desc" : "asc"))
-  }
 
   // Function to get background color based on percentage change
   const getBackgroundColor = (changePercent: number) => {

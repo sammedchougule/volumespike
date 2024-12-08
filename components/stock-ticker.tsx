@@ -5,9 +5,9 @@ import Marquee from 'react-fast-marquee'
 
 interface Stock {
   symbol: string
-  name: string
+  companyname: string
   price: number
-  chg_percentage: number
+  changepct: number
 }
 
 export default function StockTicker() {
@@ -52,10 +52,10 @@ export default function StockTicker() {
             <span className="ml-1">{stock.price.toFixed(2)}</span>
             <span 
               className={`ml-1 font-semibold ${
-                stock.chg_percentage >= 0 ? 'text-green-500' : 'text-red-500'
+                stock.changepct >= 0 ? 'text-green-500' : 'text-red-500'
               }`}
             >
-              {stock.chg_percentage >= 0 ? '▲' : '▼'} {Math.abs(stock.chg_percentage)}%
+              {stock.changepct >= 0 ? '▲' : '▼'} {Math.abs(stock.changepct)}%
             </span>
             {index < stocks.length - 1 && (
               <span className="mx-3 text-gray-600">|</span>

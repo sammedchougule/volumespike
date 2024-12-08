@@ -2,10 +2,10 @@ import { Card, CardContent } from "@/components/ui/card"
 import { ArrowUpIcon, ArrowDownIcon } from "lucide-react"
 
 interface StockCardProps {
-  stock_name: string;
+  companyname: string;
   symbol: string;
   price: number;
-  chg_percentage: number;
+  changepct: number;
 }
 
 const getRandomColor = (seed: string) => {
@@ -16,16 +16,16 @@ const getRandomColor = (seed: string) => {
 
 
 
-export function StockCard({ stock_name, symbol, price, chg_percentage }: StockCardProps) {
+export function StockCard({ companyname, symbol, price, changepct }: StockCardProps) {
   return (
     <Card className="bg-transparent shadow-none border-none h-full">
       <CardContent className="p-4 h-full flex flex-col justify-between">
         {/* Symbol and Name Section */}
         <div>
-          <div className="self-start inline-block px-3 py-1 rounded-md text-sm font-medium text-white mb-2" style={{ backgroundColor: getRandomColor(symbol) }}>
+          <div className="self-start inline-block px-2 py-1 rounded-md text-sm font-medium text-white mb-2" style={{ backgroundColor: getRandomColor(symbol) }}>
             {symbol}
           </div>
-          <h3 className="text-lg font-semibold text-gray-800 line-clamp-2 min-h-[3.5rem]">{stock_name}</h3>
+          <h3 className="text-lg font-semibold text-gray-800 line-clamp-2 min-h-[3.5rem]">{companyname}</h3>
         </div>
 
         {/* Price and Change Section */}
@@ -37,17 +37,17 @@ export function StockCard({ stock_name, symbol, price, chg_percentage }: StockCa
             }
           </p>
           <div className={`inline-flex items-center px-1 py-1 rounded-md text-sm font-bold ${
-            chg_percentage >= 0 
+            changepct >= 0 
               ? 'bg-green-50 text-green-600' 
               : 'bg-red-50 text-red-600'
           }`}>
-            {chg_percentage >= 0 ? (
+            {changepct >= 0 ? (
               <ArrowUpIcon className="mr-1 h-3 w-3" />
             ) : (
               <ArrowDownIcon className="mr-1 h-3 w-3" />
             )}
             <span className="truncate">
-              {Math.abs(chg_percentage).toFixed(2)}%
+              {Math.abs(changepct).toFixed(2)}%
             </span>
           </div>
         </div>

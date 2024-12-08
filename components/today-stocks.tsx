@@ -36,7 +36,7 @@ export default function TodayStocks() {
   if (data && prevData.current) {
     data.stocks.forEach((stock, index) => {
       const prevStock = prevData.current?.stocks[index]
-      if (prevStock && (stock.price !== prevStock.price || stock.chg_percentage !== prevStock.chg_percentage)) {
+      if (prevStock && (stock.price !== prevStock.price || stock.changepct !== prevStock.changepct)) {
         changedStocks.add(stock.symbol)
       }
     })
@@ -53,25 +53,25 @@ export default function TodayStocks() {
     switch (activeTab) {
       case 'gainers':
         return data.stocks
-          .filter((stock) => stock.chg_percentage > 0)
-          .sort((a, b) => b.chg_percentage - a.chg_percentage)
+          .filter((stock) => stock.changepct > 0)
+          .sort((a, b) => b.changepct - a.changepct)
           .slice(0, 6)
       case 'losers':
         return data.stocks
-          .filter((stock) => stock.chg_percentage < 0)
-          .sort((a, b) => a.chg_percentage - b.chg_percentage)
+          .filter((stock) => stock.changepct < 0)
+          .sort((a, b) => a.changepct - b.changepct)
           .slice(0, 6)
       case 'most-active':
         return data.stocks
-          .sort((a, b) => Math.abs(b.chg_percentage) - Math.abs(a.chg_percentage))
+          .sort((a, b) => Math.abs(b.changepct) - Math.abs(a.changepct))
           .slice(0, 6)
       case '52w-high':
         return data.stocks
-          .filter((stock) => stock.price >= stock.year_high)
+          .filter((stock) => stock.price >= stock.high52)
           .slice(0, 6)
       case '52w-low':
         return data.stocks
-          .filter((stock) => stock.price <= stock.year_low)
+          .filter((stock) => stock.price <= stock.low52)
           .slice(0, 6)
       default:
         return data.stocks.slice(0, 5)
@@ -138,12 +138,12 @@ export default function TodayStocks() {
                 >
                   <div className="flex items-center gap-3">
                     {stock.logo && stock.logo !== '0' ? (
-                      <img src={stock.logo} alt={`${stock.stock_name} logo`} className="w-8 h-8 rounded-full" />
+                      <img src={stock.logo} alt={`${stock.companyname} logo`} className="w-8 h-8 rounded-full" />
                     ) : (
                       <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center">{stock.symbol[0]}</div>
                     )}
                     <div>
-                      <p className="text-white font-medium">{stock.stock_name}</p>
+                      <p className="text-white font-medium">{stock.companyname}</p>
                       <p className="text-gray-400 text-sm">{stock.symbol}</p>
                     </div>
                   </div>
@@ -151,9 +151,9 @@ export default function TodayStocks() {
                     <p className={`text-white font-medium ${changedStocks.has(stock.symbol) ? 'animate-blink' : ''}`}>
                       ₹{stock.price.toFixed(2)}
                     </p>
-                    <p className={`text-sm flex items-center ${stock.chg_percentage >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                      {stock.chg_percentage >= 0 ? <ArrowUpIcon className="mr-1" /> : <ArrowDownIcon className="mr-1" />}
-                      {Math.abs(stock.chg_percentage)}%
+                    <p className={`text-sm flex items-center ${stock.changepct >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                      {stock.changepct >= 0 ? <ArrowUpIcon className="mr-1" /> : <ArrowDownIcon className="mr-1" />}
+                      {Math.abs(stock.changepct)}%
                     </p>
                   </div>
                 </div>

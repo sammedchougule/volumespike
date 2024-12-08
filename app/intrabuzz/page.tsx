@@ -1,121 +1,3 @@
-// 'use client'
-
-// import { useState, useEffect } from "react"
-// import { StockCard } from "@/components/universal/stock-card"
-// import { Button } from "@/components/ui/button"
-// import { fetchStockData } from "@/utils/fetchStockData"
-// import { Stock } from "@/types/stock"
-
-// export default function Nifty50Page() {
-//   const [stocks, setStocks] = useState<Stock[]>([])
-//   const [filteredStocks, setFilteredStocks] = useState<Stock[]>([])
-//   const [activeFilter, setActiveFilter] = useState<"all" | "long" | "short">("all")
-//   const [loading, setLoading] = useState<boolean>(true)
-
-//   useEffect(() => {
-//     async function loadStocks() {
-//       try {
-//         setLoading(true)
-//         const data = await fetchStockData()
-//         setStocks(data)
-//         setFilteredStocks(data)
-//       } catch (err) {
-//         console.error("Error fetching stocks:", err)
-//       } finally {
-//         setLoading(false)
-//       }
-//     }
-//     loadStocks()
-//   }, [])
-
-//   const applyFilter = (filter: 'all' | 'long' | 'short') => {
-//     setActiveFilter(filter);
-//     if (filter === 'all') {
-//       setFilteredStocks(stocks);
-//     } else if (filter === 'long') {
-//       setFilteredStocks(
-//         stocks.filter((stock) => stock.chg_percentage > 0)
-//           .sort((a, b) => b.chg_percentage - a.chg_percentage)
-//       );
-//     } else {
-//       setFilteredStocks(
-//         stocks.filter((stock) => stock.chg_percentage < 0)
-//           .sort((a, b) => a.chg_percentage - b.chg_percentage)
-//       );
-//     }
-//   };
-
-  // const getBackgroundColor = (changePercent: number) => {
-  //   const maxPercent = 10;
-  //   const clampedPercent = Math.max(-maxPercent, Math.min(changePercent, maxPercent));
-  //   if (clampedPercent === 0) return `rgba(255, 215, 0, 1)`;
-
-  //   const intensity = Math.abs(clampedPercent) / maxPercent;
-  //   if (clampedPercent > 0) {
-  //     const red = Math.round(255 - 255 * intensity);
-  //     const green = Math.round(215 + (128 - 215) * intensity);
-  //     const blue = Math.round(0);
-  //     return `rgba(${red}, ${green}, ${blue}, 1)`;
-  //   } else {
-  //     const red = Math.round(255 - (255 - 178) * intensity);
-  //     const green = Math.round(215 - 215 * intensity);
-  //     const blue = Math.round(0 + 34 * intensity);
-  //     return `rgba(${red}, ${green}, ${blue}, 1)`;
-  //   }
-  // };
-
-//   return (
-//     <div className="container mx-auto px-4 py-8">
-//       <h1 className="text-3xl font-bold mb-6 text-white">
-//         {loading ? <div className="skeleton h-8 w-48"></div> : "Nifty 50 Stocks"}
-//       </h1>
-
-//       <div className="mb-6 flex space-x-4">
-//         {["all", "long", "short"].map((filter) => (
-//           <Button
-//             key={filter}
-//             onClick={() => applyFilter(filter as "all" | "long" | "short")}
-//             className={`px-2 py-2 rounded-md font-medium ${
-//               activeFilter === filter
-//                 ? "bg-gray-700 text-white border border-gray-200"
-//                 : "bg-gray-900 text-gray-200 border border-gray-700"
-//             }`}
-//           >
-//             {loading ? <div className="skeleton h-6 w-24"></div> : filter === "all" ? "All Stocks" : filter === "long" ? "Long Build Up" : "Short Build Up"}
-//           </Button>
-//         ))}
-//       </div>
-
-//       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-//         {loading
-//           ? Array.from({ length: 12 }).map((_, index) => (
-//             ))
-//           : filteredStocks.map((stock) => (
-//               <div
-//                 key={stock.symbol}
-//                 style={{ backgroundColor: getBackgroundColor(stock.chg_percentage) }}
-//                 className="rounded-lg transition-colors">
-//                 <StockCard
-//                   stock_name={stock.stock_name}
-//                   symbol={stock.symbol}
-//                   price={stock.price}
-//                   chg_rs={stock.chg_rs}
-//                   chg_percentage={stock.chg_percentage}
-//                 />
-//               </div>
-//             ))}
-//       </div>
-//     </div>
-//   )
-// }
-
-
-
-
-
-
-
-
 
 'use client'
 
@@ -172,41 +54,43 @@ export default function Nifty50Page() {
     filterAndSortStocks()
   }, [selectedSector, sortBy, volumeSpikeOrder])
 
+  
   const filterAndSortStocks = () => {
-    let result = [...stocks]
-
+    let result = [...stocks];
+  
+    // Filter by Sector
     if (selectedSector && selectedSector !== "All") {
-      result = result.filter((stock) => stock.sector === selectedSector)
+      result = result.filter((stock) => stock.sector === selectedSector);
     }
-
+  
+    // Sort by Selected Option
     if (sortBy) {
       switch (sortBy) {
         case "alphabetical":
-          result.sort((a, b) => a.stock_name.localeCompare(b.stock_name))
-          break
+          result.sort((a, b) => a.companyname.localeCompare(b.companyname));
+          break;
         case "percentageInc":
-          result.sort((a, b) => b.chg_percentage - a.chg_percentage)
-          break
+          result.sort((a, b) => b.changepct - a.changepct);
+          break;
         case "percentageDec":
-          result.sort((a, b) => a.chg_percentage - b.chg_percentage)
-          break
-        case "volumeSpike":
-          result.sort((a, b) => (b.volume_spike) - (a.volume_spike))
-          break
+          result.sort((a, b) => a.changepct - b.changepct);
+          break;
       }
     }
 
-    // Sorting based on volume spike order (ascending or descending)
+
+    // Sort by Volume Spike Order
     if (volumeSpikeOrder) {
       result.sort((a, b) => {
-        const spikeA = (a.volume_spike)
-        const spikeB = (b.volume_spike)
-        return volumeSpikeOrder === "asc" ? spikeA - spikeB : spikeB - spikeA
-      })
+        const spikeA = a.volumespike;
+        const spikeB = b.volumespike;
+        return volumeSpikeOrder === "asc" ? spikeA - spikeB : spikeB - spikeA;
+      });
     }
 
-    setFilteredStocks(result)
-  }
+    setFilteredStocks(result);
+  };
+  
 
   const toggleView = () => setIsTableView(!isTableView)
 
@@ -259,7 +143,7 @@ export default function Nifty50Page() {
 
         {/* Skeleton for Cards */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-          {[...Array(10)].map((_, index) => (
+          {[...Array(20)].map((_, index) => (
             <div key={index} className="bg-gray-700 p-4 rounded-lg">
               <Skeleton width="100%" height="160px" />
             </div>
@@ -302,18 +186,18 @@ export default function Nifty50Page() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem onSelect={() => setSortBy("Alphabetical")}>
-              A - B
-            </DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => setSortBy("% Change (High to Low)")}>
-              % High to Low
-            </DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => setSortBy("% Change (Low to High)")}>
-              % Low to High
-            </DropdownMenuItem>
-            {/* <DropdownMenuItem onSelect={() => setSortBy("Volume Spike")}>
+          <DropdownMenuItem onSelect={() => setSortBy("alphabetical")}>
+            A - Z
+          </DropdownMenuItem>
+          <DropdownMenuItem onSelect={() => setSortBy("percentageInc")}>
+            % High to Low
+          </DropdownMenuItem>
+          <DropdownMenuItem onSelect={() => setSortBy("percentageDec")}>
+            % Low to High
+          </DropdownMenuItem>
+            <DropdownMenuItem onSelect={() => setSortBy("Volume Spike")}>
               Volume Spike
-            </DropdownMenuItem> */}
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
 
@@ -322,10 +206,6 @@ export default function Nifty50Page() {
           {isTableView ? <LayoutGrid className="h-4 w-4" /> : <Table className="h-4 w-4" />}
         </Button>
 
-        {/* Volume Spike Order Button */}
-        <Button variant="outline" onClick={toggleVolumeSpikeOrder}>
-          <Flame className="h-4 w-4" />
-        </Button>
       </div>
 
       {/* Cards or Table View */}
@@ -360,13 +240,13 @@ export default function Nifty50Page() {
                 filteredStocks.map((stock) => (
                   <tr key={stock.symbol} className="border-b border-gray-700">
                     <td className="px-3 py-2 font-medium whitespace-nowrap">{stock.symbol}</td>
-                    <td className="px-3 py-2">{stock.stock_name}</td>
+                    <td className="px-3 py-2">{stock.companyname}</td>
                     <td className="px-3 py-2">₹{stock.price.toFixed(2)}</td>
-                    <td className={`px-3 py-2 ${stock.chg_percentage >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                      {stock.chg_percentage}%
+                    <td className={`px-3 py-2 ${stock.changepct >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                      {stock.changepct}%
                     </td>
                     <td className="px-3 py-2">{stock.sector}</td>
-                    <td className="px-3 py-2">{stock.volume_spike}</td>
+                    <td className="px-3 py-2">{stock.changepct}</td>
                   </tr>
                 ))
               )}
@@ -379,14 +259,14 @@ export default function Nifty50Page() {
             <Link href={`/stockdetail/${stock.symbol}`} key={stock.symbol}>
               <div
                 key={stock.symbol}
-                style={{ backgroundColor: getBackgroundColor(stock.chg_percentage) }}
+                style={{ backgroundColor: getBackgroundColor(stock.changepct) }}
                 className="rounded-lg transition-all duration-300 hover:scale-105 cursor-pointer"
               >
                 <StockCard
-                  stock_name={stock.stock_name}
+                  companyname={stock.companyname}
                   symbol={stock.symbol}
                   price={stock.price}
-                  chg_percentage={stock.chg_percentage}
+                  changepct={stock.changepct}
                 />
               </div>
             </Link>
